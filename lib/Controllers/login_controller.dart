@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_project/BottomNavBar/ButtomNavBar.dart';
+import 'package:flutter_project/Controllers/home_screen_controller.dart';
 import 'package:flutter_project/Models/Login_model.dart';
 import 'package:flutter_project/Screens/Home_screen.dart';
 import 'package:flutter_project/Screens/loginScreen.dart';
@@ -36,8 +37,8 @@ class LoginController extends GetxController {
           .then((response) {
         if (response!.status == 200) {
           loginModel.value = response;
-          SecureStorage().writeKey('name', response.fullName!);
-          SecureStorage().writeKey('email', response.emailAddress!);
+          SecureStorage().writeKey(key: 'name', value: response.fullName!);
+          SecureStorage().writeKey(key: 'email', value: response.emailAddress!);
           Fluttertoast.showToast(msg: "Successfully you are logged in");
           Get.off(() => BottomNavBar());
         } else {
@@ -50,8 +51,8 @@ class LoginController extends GetxController {
   }
 
   void logout() async {
-    SecureStorage().deleteKey('name');
-    SecureStorage().deleteKey('email');
+    SecureStorage().deleteKey(key: 'name');
+    SecureStorage().deleteKey(key: 'email');
     Get.off(LoginScreen());
   }
 

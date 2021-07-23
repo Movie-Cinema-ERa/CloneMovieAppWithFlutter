@@ -34,17 +34,45 @@ class HomeScreen extends StatelessWidget {
                             .toString()
                         : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU"),
                   ),
-                  accountName: Text(
-                    "${loginController.firebaseAuth.currentUser != null ? loginController.firebaseAuth.currentUser!.displayName : loginController.loginModel.value.fullName != null ? loginController.loginModel.value.fullName : " "}",
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.9,
-                        fontSize: 15),
-                  ),
-                  accountEmail: Text(
-                    "${loginController.firebaseAuth.currentUser != null ? loginController.firebaseAuth.currentUser!.email : loginController.loginModel.value.emailAddress != null ? loginController.loginModel.value.emailAddress : " "}",
-                    style: TextStyle(letterSpacing: 0.8, fontSize: 13),
-                  ),
+                  accountName: loginController.firebaseAuth.currentUser != null
+                      ? Text(
+                          "${loginController.firebaseAuth.currentUser!.displayName}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.9,
+                              fontSize: 15),
+                        )
+                      : loginController.loginModel.value.fullName != null
+                          ? Text(
+                              "${loginController.loginModel.value.fullName}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 0.9,
+                                  fontSize: 15),
+                            )
+                          : Obx(() => Text(
+                                "${homeScreenController.name.value}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 0.9,
+                                    fontSize: 15),
+                              )),
+                  accountEmail: loginController.firebaseAuth.currentUser != null
+                      ? Text(
+                          "${loginController.firebaseAuth.currentUser!.email}",
+                          style: TextStyle(letterSpacing: 0.8, fontSize: 13),
+                        )
+                      : loginController.loginModel.value.emailAddress != null
+                          ? Text(
+                              "${loginController.loginModel.value.emailAddress}",
+                              style:
+                                  TextStyle(letterSpacing: 0.8, fontSize: 13),
+                            )
+                          : Obx(() => Text(
+                                "${homeScreenController.email.value}",
+                                style:
+                                    TextStyle(letterSpacing: 0.8, fontSize: 13),
+                              )),
                 ),
               ),
               Container(

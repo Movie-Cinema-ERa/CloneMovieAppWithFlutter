@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/BottomNavBar/ButtomNavBar.dart';
+import 'package:flutter_project/Controllers/home_screen_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Screens/loginScreen.dart';
 import 'package:flutter_project/helpers/SecureStorage.dart';
@@ -13,6 +14,8 @@ class SplashController extends GetxController
   String? email = "";
   final SecureStorage secureStorage = SecureStorage();
   final LoginController loginController = Get.put(LoginController());
+  final HomeScreenController homeScreenController =
+      Get.put(HomeScreenController());
 
   @override
   void onInit() {
@@ -27,7 +30,7 @@ class SplashController extends GetxController
     ).animate(animationController!);
 
     Future.delayed(Duration(seconds: 1), () {
-      secureStorage.readKey('email').then((value) {
+      secureStorage.readKey(key: 'email').then((value) {
         email = value;
         if (email == null) {
           if (loginController.firebaseAuth.currentUser != null) {
@@ -38,6 +41,8 @@ class SplashController extends GetxController
             });
           }
         } else {
+          homeScreenController.getEmail();
+          homeScreenController.getName();
           Timer(Duration(seconds: 2), () {
             Get.off(() => BottomNavBar());
           });
@@ -47,8 +52,6 @@ class SplashController extends GetxController
 
     super.onInit();
   }
-
-  Future check() async {}
 
   @override
   void onClose() {
