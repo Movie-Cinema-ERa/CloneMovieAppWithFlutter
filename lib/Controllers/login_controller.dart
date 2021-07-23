@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_project/BottomNavBar/ButtomNavBar.dart';
-import 'package:flutter_project/Controllers/home_screen_controller.dart';
 import 'package:flutter_project/Models/Login_model.dart';
-import 'package:flutter_project/Screens/Home_screen.dart';
 import 'package:flutter_project/Screens/loginScreen.dart';
 import 'package:flutter_project/Services/ServicesApi.dart';
 import 'package:flutter_project/helpers/SecureStorage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,7 +29,7 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-  void login({String? email, String? password}) async {
+  Future login({String? email, String? password}) async {
     try {
       await ServicesApi.loginModel(email: email, password: password)
           .then((response) {
@@ -42,7 +40,15 @@ class LoginController extends GetxController {
           Fluttertoast.showToast(msg: "Successfully you are logged in");
           Get.off(() => BottomNavBar());
         } else {
-          Fluttertoast.showToast(msg: "Wrong email or password");
+          Get.showSnackbar(GetBar(
+            icon: Icon(
+              FontAwesomeIcons.exclamationCircle,
+              color: Colors.grey[100],
+              size: 18,
+            ),
+            duration: Duration(seconds: 2),
+            message: "Wrong email or password !!",
+          ));
         }
       });
     } catch (e) {
@@ -56,7 +62,7 @@ class LoginController extends GetxController {
     Get.off(LoginScreen());
   }
 
-  void googleHanldeLogin(isLogin) async {
+  Future googleHanldeLogin(isLogin) async {
     if (isLogin) {
       Get.offAll(() => BottomNavBar());
     } else {
@@ -64,7 +70,7 @@ class LoginController extends GetxController {
     }
   }
 
-  void googleLogin() async {
+  Future googleLogin() async {
     Get.defaultDialog(
       radius: 10,
       title: "Please wait a moment...",
@@ -98,7 +104,7 @@ class LoginController extends GetxController {
     }
   }
 
-  void googleLogout() async {
+  Future googleLogout() async {
     await googleSignIn.disconnect();
     await firebaseAuth.signOut();
   }

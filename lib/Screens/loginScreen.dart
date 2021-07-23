@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           Text("Login to your account",
                               style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 19,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: "serif",
                                   color: Colors.blue[800])),

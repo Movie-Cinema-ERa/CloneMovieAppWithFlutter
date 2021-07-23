@@ -5,6 +5,7 @@ import 'package:flutter_project/Screens/loginScreen.dart';
 import 'package:flutter_project/Widgets/CustomButton.dart';
 import 'package:flutter_project/Widgets/TextForm.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -64,7 +65,7 @@ class SignUpScreen extends StatelessWidget {
                         children: [
                           Text("Register your account",
                               style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 19,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: "serif",
                                   color: Colors.blue[800])),
@@ -151,13 +152,27 @@ class SignUpScreen extends StatelessWidget {
                                       password: passwordTXT.text,
                                     );
                                   } else {
-                                    Fluttertoast.showToast(
-                                        msg:
-                                            "Confirmation password doesn't matched! try again.");
+                                    Get.showSnackbar(GetBar(
+                                      icon: Icon(
+                                        FontAwesomeIcons.exclamationCircle,
+                                        color: Colors.grey[100],
+                                        size: 18,
+                                      ),
+                                      duration: Duration(seconds: 2),
+                                      message:
+                                          "Confirmation password doesn't matched, try again. !!",
+                                    ));
                                   }
                                 } else {
-                                  Fluttertoast.showToast(
-                                      msg: "Fill up all the fields");
+                                  Get.showSnackbar(GetBar(
+                                    icon: Icon(
+                                      FontAwesomeIcons.exclamationCircle,
+                                      color: Colors.grey[100],
+                                      size: 18,
+                                    ),
+                                    duration: Duration(seconds: 2),
+                                    message: "Fill up all the fields !!",
+                                  ));
                                 }
                               }),
                           Text(
@@ -177,7 +192,7 @@ class SignUpScreen extends StatelessWidget {
                                 color: Colors.blue[800],
                                 fontWeight: FontWeight.bold),
                             onpress: () {
-                              Get.to(LoginScreen());
+                              Get.offAll(() => LoginScreen());
                             },
                           ),
                           SizedBox(

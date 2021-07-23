@@ -38,8 +38,8 @@ class SplashScreen extends StatelessWidget {
             ),
             Image.asset(
               "assets/images/splash_icon.png",
-              height: 80,
-              width: 80,
+              height: 84,
+              width: 84,
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.41,
