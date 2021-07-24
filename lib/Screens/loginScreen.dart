@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Screens/SignUp_screen.dart';
-import 'package:flutter_project/Widgets/CustomButton.dart';
-import 'package:flutter_project/Widgets/TextForm.dart';
+import 'package:flutter_project/Widgets/account_CustomButton.dart';
+import 'package:flutter_project/Widgets/account_TextForm.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
                   Text(
                     "Let's sign you in",
                     style: TextStyle(
-                        fontSize: 21,
+                        fontSize: 23,
                         fontWeight: FontWeight.bold,
                         fontFamily: "serif",
                         color: Colors.blue[800]),
@@ -53,7 +53,7 @@ class LoginScreen extends StatelessWidget {
                     image: AssetImage("assets/images/login.png"),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.09,
+                    height: MediaQuery.of(context).size.height * 0.05,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 32, right: 32),
@@ -67,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                                   fontFamily: "serif",
                                   color: Colors.blue[800])),
                           SizedBox(
-                            height: 15,
+                            height: 18,
                           ),
                           CustomTextForm(
                               label: "Email address",

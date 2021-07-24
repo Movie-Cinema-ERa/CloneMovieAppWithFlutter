@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_project/Controllers/SignUp_controller.dart';
 import 'package:flutter_project/Screens/loginScreen.dart';
-import 'package:flutter_project/Widgets/CustomButton.dart';
-import 'package:flutter_project/Widgets/TextForm.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_project/Widgets/account_CustomButton.dart';
+import 'package:flutter_project/Widgets/account_TextForm.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
@@ -35,7 +34,7 @@ class SignUpScreen extends StatelessWidget {
                   Text(
                     "Get Registered and",
                     style: TextStyle(
-                        fontSize: 21,
+                        fontSize: 23,
                         fontWeight: FontWeight.bold,
                         fontFamily: "serif",
                         color: Colors.blue[800]),
@@ -70,7 +69,7 @@ class SignUpScreen extends StatelessWidget {
                                   fontFamily: "serif",
                                   color: Colors.blue[800])),
                           SizedBox(
-                            height: 15,
+                            height: 18,
                           ),
                           CustomTextForm(
                               editTxtControl: fullNameTXT,

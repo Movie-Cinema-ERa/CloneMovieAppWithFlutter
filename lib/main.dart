@@ -24,15 +24,10 @@ class MoviesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        statusBarColor: Colors.blue.shade800,
-      ),
-    );
     return GetMaterialApp(
       theme: ThemeData(
-        primaryColor: Colors.blue[800],
-        primaryColorDark: Colors.blue[800],
+        primaryColor: Colors.grey[100],
+        primaryColorDark: Colors.grey[100],
       ),
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),

@@ -21,15 +21,15 @@ class SplashController extends GetxController
   void onInit() {
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 2),
+      duration: Duration(seconds: 3),
     );
     animationController!.forward();
     animation = Tween(
       begin: 0.0,
-      end: 846.0,
+      end: 950.0,
     ).animate(animationController!);
 
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(seconds: 2), () {
       secureStorage.readKey(key: 'email').then((value) {
         email = value;
         if (email == null) {

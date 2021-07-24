@@ -15,7 +15,7 @@ class SignUpController extends GetxController {
           .then((response) {
         if (response!.status == 200) {
           Fluttertoast.showToast(msg: "Successfully you are Registered");
-          Get.off(LoginScreen());
+          Get.offAll(LoginScreen());
         } else {
           Get.showSnackbar(GetBar(
             icon: Icon(

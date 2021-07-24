@@ -30,7 +30,7 @@ class BottomNavBar extends StatelessWidget {
             unselectedLabelStyle: TextStyle(color: Colors.red),
             selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
             type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.blue[100],
+            backgroundColor: Colors.grey[300],
             onTap: (index) {
               buttonNavBarController.cIndex.value = index;
             },
