@@ -40,15 +40,17 @@ class LoginController extends GetxController {
           Fluttertoast.showToast(msg: "Successfully you are logged in");
           Get.off(() => BottomNavBar());
         } else {
-          Get.showSnackbar(GetBar(
-            icon: Icon(
-              FontAwesomeIcons.exclamationCircle,
-              color: Colors.grey[100],
-              size: 18,
+          Get.showSnackbar(
+            GetBar(
+              icon: Icon(
+                FontAwesomeIcons.exclamationCircle,
+                color: Colors.grey[100],
+                size: 18,
+              ),
+              duration: Duration(seconds: 2),
+              message: "Wrong email or password !!",
             ),
-            duration: Duration(seconds: 2),
-            message: "Wrong email or password !!",
-          ));
+          );
         }
       });
     } catch (e) {

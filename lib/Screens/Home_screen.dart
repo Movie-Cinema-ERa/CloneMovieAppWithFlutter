@@ -5,6 +5,7 @@ import 'package:flutter_project/Controllers/home_screen_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Widgets/drawer_list_tile.dart';
 import 'package:flutter_project/Widgets/movies_horizontal_list_view.dart';
+import 'package:flutter_project/helpers/ApiClient.dart';
 import 'package:flutter_project/helpers/SecureStorage.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -337,49 +338,182 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            height: Get.height * 0.95,
-            padding: EdgeInsets.only(
-                left: Get.width * 0.06, right: Get.width * 0.06),
-            child: Column(
-              children: [
-                CarouselSlider(
-                    items: homeScreenController.movieSlider
-                        .map((slider) => Container(
-                              child: Stack(
-                                fit: StackFit.expand,
+        body: Obx(
+          () => homeScreenController.isload.value == false
+              ? Center(
+                  child: Container(
+                    height: 26,
+                    width: 26,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.4,
+                      backgroundColor: Colors.grey[300],
+                    ),
+                  ),
+                )
+              : SingleChildScrollView(
+                  child: Container(
+                    height: Get.height * 0.93,
+                    padding: EdgeInsets.only(
+                        left: Get.width * 0.06, right: Get.width * 0.06),
+                    child: Column(
+                      children: [
+                        CarouselSlider(
+                          items: homeScreenController
+                              .moviesModel.value.sliderMovies!
+                              .map((slider) => Container(
+                                    child: Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        Image.network(
+                                          ApiClients.moviesPoster +
+                                              slider.filmImage.toString(),
+                                        ),
+                                      ],
+                                    ),
+                                  ))
+                              .toList(),
+                          options: CarouselOptions(
+                              enlargeCenterPage: true,
+                              aspectRatio: 2.3,
+                              viewportFraction: 0.37,
+                              enableInfiniteScroll: true,
+                              autoPlay: true),
+                        ),
+                        MoviesListView(
+                          title: homeScreenController.movieCategories[0],
+                          itemCount: homeScreenController
+                              .moviesModel.value.actionMovies!.length,
+                          builder: (BuildContext context, int idx) {
+                            return Container(
+                              child: Column(
                                 children: [
-                                  Image.asset(
-                                    slider,
-                                    fit: BoxFit.contain,
-                                  )
+                                  Container(
+                                    height: 130,
+                                    width: 150,
+                                    child: Image.network(
+                                      homeScreenController
+                                                  .moviesModel
+                                                  .value
+                                                  .actionMovies![idx]
+                                                  .filmImage !=
+                                              null
+                                          ? ApiClients.moviesPoster +
+                                              homeScreenController
+                                                  .moviesModel
+                                                  .value
+                                                  .actionMovies![idx]
+                                                  .filmImage
+                                                  .toString()
+                                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Text(
+                                    homeScreenController.moviesModel.value
+                                        .actionMovies![idx].filmName
+                                        .toString(),
+                                    style: TextStyle(
+                                      color: Colors.blue[800],
+                                      letterSpacing: 0.3,
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ))
-                        .toList(),
-                    options: CarouselOptions(
-                        enlargeCenterPage: true,
-                        aspectRatio: 2.3,
-                        viewportFraction: 0.37,
-                        enableInfiniteScroll: true,
-                        autoPlay: true)),
-                MoviesListView(
-                  title: homeScreenController.movieCategories[0],
-                  moviesName: "revenant",
-                  image: "assets/images/login.png",
+                            );
+                          },
+                        ),
+                        MoviesListView(
+                          title: homeScreenController.movieCategories[0],
+                          itemCount: homeScreenController
+                              .moviesModel.value.loveStories!.length,
+                          builder: (BuildContext context, int idx) {
+                            return Container(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 130,
+                                    width: 150,
+                                    child: Image.network(
+                                      homeScreenController
+                                                  .moviesModel
+                                                  .value
+                                                  .loveStories![idx]
+                                                  .filmImage !=
+                                              null
+                                          ? ApiClients.moviesPoster +
+                                              homeScreenController
+                                                  .moviesModel
+                                                  .value
+                                                  .loveStories![idx]
+                                                  .filmImage
+                                                  .toString()
+                                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Text(
+                                    homeScreenController.moviesModel.value
+                                        .loveStories![idx].filmName
+                                        .toString(),
+                                    style: TextStyle(
+                                      color: Colors.blue[800],
+                                      letterSpacing: 0.3,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        MoviesListView(
+                          title: homeScreenController.movieCategories[0],
+                          itemCount: homeScreenController
+                              .moviesModel.value.horrorMovies!.length,
+                          builder: (BuildContext context, int idx) {
+                            return Container(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 130,
+                                    width: 150,
+                                    child: Image.network(
+                                      homeScreenController
+                                                  .moviesModel
+                                                  .value
+                                                  .horrorMovies![idx]
+                                                  .filmImage !=
+                                              null
+                                          ? ApiClients.moviesPoster +
+                                              homeScreenController
+                                                  .moviesModel
+                                                  .value
+                                                  .horrorMovies![
+                                                      homeScreenController
+                                                          .listeners]
+                                                  .filmImage
+                                                  .toString()
+                                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Text(
+                                    homeScreenController.moviesModel.value
+                                        .horrorMovies![idx].filmName
+                                        .toString(),
+                                    style: TextStyle(
+                                      color: Colors.blue[800],
+                                      letterSpacing: 0.3,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                MoviesListView(
-                  title: homeScreenController.movieCategories[1],
-                  image: "assets/images/login.png",
-                ),
-                MoviesListView(
-                  title: homeScreenController.movieCategories[2],
-                  image: "assets/images/login.png",
-                ),
-              ],
-            ),
-          ),
         ),
       ),
     );

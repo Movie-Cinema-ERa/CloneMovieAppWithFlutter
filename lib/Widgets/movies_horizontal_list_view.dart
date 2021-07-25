@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class MoviesListView extends StatelessWidget {
-  const MoviesListView({Key? key, this.title, this.moviesName, this.image})
+  MoviesListView({Key? key, this.title, this.itemCount, this.builder})
       : super(key: key);
   final String? title;
-  final String? moviesName;
-  final String? image;
+  final int? itemCount;
+  final Widget Function(BuildContext, int)? builder;
 
   @override
   Widget build(BuildContext context) {
@@ -26,33 +26,10 @@ class MoviesListView extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemCount: 2,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  child: Column(
-                    children: [
-                      Container(
-                        child: Image.asset(
-                          image!,
-                          height: 130,
-                          width: 150,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Text(
-                        moviesName.toString(),
-                        style: TextStyle(
-                          color: Colors.blue[800],
-                          letterSpacing: 0.3,
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: itemCount,
+                itemBuilder: builder!),
           ),
         ],
       ),
