@@ -207,14 +207,18 @@ class HomeScreen extends StatelessWidget {
                   builder: (context) {
                     return GestureDetector(
                       onTap: () => Scaffold.of(context).openDrawer(),
-                      child: CircleAvatar(
-                        radius: 14,
-                        backgroundImage: NetworkImage(
-                          loginController.firebaseAuth.currentUser != null
-                              ? loginController
-                                  .firebaseAuth.currentUser!.photoURL
-                                  .toString()
-                              : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                      child: Container(
+                        width: 27,
+                        child: CircleAvatar(
+                          child: ClipOval(
+                            child: Image.network(
+                              loginController.firebaseAuth.currentUser != null
+                                  ? loginController
+                                      .firebaseAuth.currentUser!.photoURL
+                                      .toString()
+                                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                            ),
+                          ),
                         ),
                       ),
                     );
@@ -240,7 +244,7 @@ class HomeScreen extends StatelessWidget {
                 ]),
           ),
           bottom: PreferredSize(
-            preferredSize: Size.fromHeight(Get.height * 0.15),
+            preferredSize: Size.fromHeight(Get.height * 0.13),
             child: Container(
               padding: EdgeInsets.only(
                   left: Get.width * 0.06, right: Get.width * 0.06),
@@ -250,15 +254,15 @@ class HomeScreen extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: RichText(
                       text: TextSpan(
-                          text: "Discover Movies",
+                          text: "Discover Movies!!",
                           style: TextStyle(
-                              fontSize: 16.4,
+                              fontSize: 16.3,
                               fontWeight: FontWeight.w900,
-                              letterSpacing: 0.6,
+                              letterSpacing: 0.7,
                               color: Colors.grey.shade800),
                           children: [
                             TextSpan(
-                              text: "\nand watch with fun !!",
+                              text: "\nand watch with fun...",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey.shade700,
@@ -276,7 +280,7 @@ class HomeScreen extends StatelessWidget {
                     builder: (controller) {
                       return Container(
                         width: MediaQuery.of(context).size.width * 0.92,
-                        height: MediaQuery.of(context).size.height * 0.064,
+                        height: MediaQuery.of(context).size.height * 0.058,
                         child: TextFormField(
                           controller: homeScreenController.searchMoviesTxt,
                           onChanged: (searchMovies) {
@@ -289,7 +293,7 @@ class HomeScreen extends StatelessWidget {
                           keyboardType: TextInputType.text,
                           cursorColor: Colors.grey.shade500,
                           decoration: InputDecoration(
-                              fillColor: Colors.grey.shade200,
+                              fillColor: Colors.grey.shade300,
                               filled: true,
                               hintStyle:
                                   TextStyle(fontSize: 15, color: Colors.grey),
@@ -352,7 +356,7 @@ class HomeScreen extends StatelessWidget {
                 )
               : SingleChildScrollView(
                   child: Container(
-                    height: Get.height * 0.93,
+                    margin: EdgeInsets.only(top: 11),
                     padding: EdgeInsets.only(
                         left: Get.width * 0.06, right: Get.width * 0.06),
                     child: Column(
@@ -360,24 +364,28 @@ class HomeScreen extends StatelessWidget {
                         CarouselSlider(
                           items: homeScreenController
                               .moviesModel.value.sliderMovies!
-                              .map((slider) => Container(
-                                    child: Stack(
-                                      fit: StackFit.expand,
-                                      children: [
-                                        Image.network(
+                              .map((slider) => Stack(
+                                    fit: StackFit.expand,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.network(
                                           ApiClients.moviesPoster +
                                               slider.filmImage.toString(),
+                                          fit: BoxFit.cover,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ))
                               .toList(),
                           options: CarouselOptions(
                               enlargeCenterPage: true,
                               aspectRatio: 2.3,
-                              viewportFraction: 0.37,
                               enableInfiniteScroll: true,
                               autoPlay: true),
+                        ),
+                        SizedBox(
+                          height: 13,
                         ),
                         MoviesListView(
                           title: homeScreenController.movieCategories[0],
@@ -385,27 +393,37 @@ class HomeScreen extends StatelessWidget {
                               .moviesModel.value.actionMovies!.length,
                           builder: (BuildContext context, int idx) {
                             return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: Colors.white,
+                              ),
+                              width: 111,
+                              margin: EdgeInsets.only(right: 8),
                               child: Column(
                                 children: [
                                   Container(
-                                    height: 130,
-                                    width: 150,
-                                    child: Image.network(
-                                      homeScreenController
-                                                  .moviesModel
-                                                  .value
-                                                  .actionMovies![idx]
-                                                  .filmImage !=
-                                              null
-                                          ? ApiClients.moviesPoster +
-                                              homeScreenController
-                                                  .moviesModel
-                                                  .value
-                                                  .actionMovies![idx]
-                                                  .filmImage
-                                                  .toString()
-                                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                                      fit: BoxFit.cover,
+                                    margin: EdgeInsets.only(top: 7, bottom: 6),
+                                    height: 136,
+                                    width: 97,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.network(
+                                        homeScreenController
+                                                    .moviesModel
+                                                    .value
+                                                    .actionMovies![idx]
+                                                    .filmImage !=
+                                                null
+                                            ? ApiClients.moviesPoster +
+                                                homeScreenController
+                                                    .moviesModel
+                                                    .value
+                                                    .actionMovies![idx]
+                                                    .filmImage
+                                                    .toString()
+                                            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                   Text(
@@ -414,6 +432,7 @@ class HomeScreen extends StatelessWidget {
                                         .toString(),
                                     style: TextStyle(
                                       color: Colors.blue[800],
+                                      fontSize: 12,
                                       letterSpacing: 0.3,
                                     ),
                                   ),
@@ -422,33 +441,46 @@ class HomeScreen extends StatelessWidget {
                             );
                           },
                         ),
+                        SizedBox(
+                          height: 13,
+                        ),
                         MoviesListView(
-                          title: homeScreenController.movieCategories[0],
+                          title: homeScreenController.movieCategories[1],
                           itemCount: homeScreenController
                               .moviesModel.value.loveStories!.length,
                           builder: (BuildContext context, int idx) {
                             return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: Colors.white,
+                              ),
+                              width: 111,
+                              margin: EdgeInsets.only(right: 8),
                               child: Column(
                                 children: [
                                   Container(
-                                    height: 130,
-                                    width: 150,
-                                    child: Image.network(
-                                      homeScreenController
-                                                  .moviesModel
-                                                  .value
-                                                  .loveStories![idx]
-                                                  .filmImage !=
-                                              null
-                                          ? ApiClients.moviesPoster +
-                                              homeScreenController
-                                                  .moviesModel
-                                                  .value
-                                                  .loveStories![idx]
-                                                  .filmImage
-                                                  .toString()
-                                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                                      fit: BoxFit.cover,
+                                    margin: EdgeInsets.only(top: 7, bottom: 6),
+                                    height: 136,
+                                    width: 97,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.network(
+                                        homeScreenController
+                                                    .moviesModel
+                                                    .value
+                                                    .loveStories![idx]
+                                                    .filmImage !=
+                                                null
+                                            ? ApiClients.moviesPoster +
+                                                homeScreenController
+                                                    .moviesModel
+                                                    .value
+                                                    .loveStories![idx]
+                                                    .filmImage
+                                                    .toString()
+                                            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                   Text(
@@ -457,6 +489,7 @@ class HomeScreen extends StatelessWidget {
                                         .toString(),
                                     style: TextStyle(
                                       color: Colors.blue[800],
+                                      fontSize: 12,
                                       letterSpacing: 0.3,
                                     ),
                                   ),
@@ -465,35 +498,46 @@ class HomeScreen extends StatelessWidget {
                             );
                           },
                         ),
+                        SizedBox(
+                          height: 13,
+                        ),
                         MoviesListView(
-                          title: homeScreenController.movieCategories[0],
+                          title: homeScreenController.movieCategories[2],
                           itemCount: homeScreenController
                               .moviesModel.value.horrorMovies!.length,
                           builder: (BuildContext context, int idx) {
                             return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                color: Colors.white,
+                              ),
+                              width: 111,
+                              margin: EdgeInsets.only(right: 8),
                               child: Column(
                                 children: [
                                   Container(
-                                    height: 130,
-                                    width: 150,
-                                    child: Image.network(
-                                      homeScreenController
-                                                  .moviesModel
-                                                  .value
-                                                  .horrorMovies![idx]
-                                                  .filmImage !=
-                                              null
-                                          ? ApiClients.moviesPoster +
-                                              homeScreenController
-                                                  .moviesModel
-                                                  .value
-                                                  .horrorMovies![
-                                                      homeScreenController
-                                                          .listeners]
-                                                  .filmImage
-                                                  .toString()
-                                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                                      fit: BoxFit.cover,
+                                    margin: EdgeInsets.only(top: 7, bottom: 6),
+                                    height: 136,
+                                    width: 97,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Image.network(
+                                        homeScreenController
+                                                    .moviesModel
+                                                    .value
+                                                    .horrorMovies![idx]
+                                                    .filmImage !=
+                                                null
+                                            ? ApiClients.moviesPoster +
+                                                homeScreenController
+                                                    .moviesModel
+                                                    .value
+                                                    .horrorMovies![idx]
+                                                    .filmImage
+                                                    .toString()
+                                            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                   Text(
@@ -502,6 +546,7 @@ class HomeScreen extends StatelessWidget {
                                         .toString(),
                                     style: TextStyle(
                                       color: Colors.blue[800],
+                                      fontSize: 12,
                                       letterSpacing: 0.3,
                                     ),
                                   ),
@@ -509,6 +554,9 @@ class HomeScreen extends StatelessWidget {
                               ),
                             );
                           },
+                        ),
+                        SizedBox(
+                          height: 13,
                         ),
                       ],
                     ),
