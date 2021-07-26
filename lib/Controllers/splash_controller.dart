@@ -36,14 +36,14 @@ class SplashController extends GetxController
           if (loginController.firebaseAuth.currentUser != null) {
             Get.off(() => BottomNavBar());
           } else {
-            Timer(Duration(seconds: 2), () {
+            Timer(Duration(seconds: 4), () {
               Get.off(() => LoginScreen());
             });
           }
         } else {
           homeScreenController.getEmail();
           homeScreenController.getName();
-          Timer(Duration(seconds: 2), () {
+          Timer(Duration(seconds: 4), () {
             Get.off(() => BottomNavBar());
           });
         }

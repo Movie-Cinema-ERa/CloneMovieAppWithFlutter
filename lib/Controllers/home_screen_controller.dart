@@ -7,15 +7,21 @@ import 'package:get/get.dart';
 
 class HomeScreenController extends GetxController {
   final SecureStorage secureStorage = SecureStorage();
-  var moviesModel = MoviesModel().obs;
+  var moviesModel = MoviesModel();
+  List<ActionMovie> searchAction = <ActionMovie>[];
+  // List<ActionMovie>? allMovies = <ActionMovie>[];
+
   var searchMoviesTxt = TextEditingController();
   var email = "".obs;
   var name = "".obs;
-  var isload = false.obs;
+  var isload = false;
 
   @override
   void onInit() {
     getMovies();
+    // allMovies?.addAll(moviesModel.actionMovies! +
+    //     moviesModel.loveStories! +
+    //     moviesModel.horrorMovies!);
     super.onInit();
   }
 
@@ -23,12 +29,6 @@ class HomeScreenController extends GetxController {
     "Action movies",
     "Love stories",
     "Horror movies"
-  ];
-
-  List<String> movieSlider = [
-    "assets/images/login.png",
-    "assets/images/signup.png",
-    "assets/images/splash_icon.png"
   ];
 
   getEmail() async {
@@ -45,10 +45,12 @@ class HomeScreenController extends GetxController {
     try {
       ServicesApi.movies().then((response) {
         if (response != null) {
-          moviesModel.value = response;
-          isload.value = true;
+          moviesModel = response;
+          isload = true;
+          update();
         } else {
-          isload.value = false;
+          isload = false;
+          update();
           Get.showSnackbar(
             GetBar(
               icon: Icon(
@@ -65,5 +67,16 @@ class HomeScreenController extends GetxController {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  getActionSearch({var query}) {
+    searchAction = moviesModel.actionMovies!.where(
+      (filmname) {
+        final nameLower = filmname.filmName!.toLowerCase();
+        final searchLower = query.toLowerCase();
+        return nameLower.contains(searchLower);
+      },
+    ).toList();
+    update();
   }
 }
