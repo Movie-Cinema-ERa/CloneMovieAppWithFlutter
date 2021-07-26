@@ -15,7 +15,9 @@ class BottomNavBar extends StatelessWidget {
       ),
     );
     return Scaffold(
-      body: buttonNavBarController.pages[buttonNavBarController.cIndex.value],
+      body: Obx(
+        () => buttonNavBarController.pages[buttonNavBarController.cIndex.value],
+      ),
       bottomNavigationBar: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(14)),
         child: Obx(

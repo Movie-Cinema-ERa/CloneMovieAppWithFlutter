@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_project/Controllers/home_screen_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
+import 'package:flutter_project/Widgets/categories_view_all.dart';
 import 'package:flutter_project/Widgets/drawer_list_tile.dart';
 import 'package:flutter_project/Widgets/movies_horizontal_list_view.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
@@ -25,8 +26,14 @@ class HomeScreen extends StatelessWidget {
       ),
     );
     return GestureDetector(
-      onTap: FocusScope.of(context).unfocus,
+      onTap: () {
+        final FocusScopeNode currentScope = FocusScope.of(context);
+        if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+          FocusManager.instance.primaryFocus!.unfocus();
+        }
+      },
       child: Scaffold(
+        drawerEnableOpenDragGesture: false,
         backgroundColor: Colors.grey[100],
         drawer: Drawer(
           child: Container(
@@ -129,16 +136,8 @@ class HomeScreen extends StatelessWidget {
                         titleTxt: "About us",
                       ),
                       DrawerListTile(
-                        icon: Icons.message,
-                        titleTxt: "Message",
-                      ),
-                      DrawerListTile(
                         icon: Icons.call,
                         titleTxt: "Contact us",
-                      ),
-                      DrawerListTile(
-                        icon: Icons.support_agent,
-                        titleTxt: "Support",
                       ),
                       DrawerListTile(
                         icon: Icons.help_center,
@@ -201,14 +200,14 @@ class HomeScreen extends StatelessWidget {
           actions: [
             Padding(
                 padding: EdgeInsets.only(
-                  right: Get.height * 0.023,
+                  right: Get.height * 0.026,
                 ),
                 child: Builder(
                   builder: (context) {
                     return GestureDetector(
                       onTap: () => Scaffold.of(context).openDrawer(),
                       child: Container(
-                        width: 27,
+                        width: 25,
                         child: CircleAvatar(
                           child: ClipOval(
                             child: Image.network(
@@ -277,7 +276,7 @@ class HomeScreen extends StatelessWidget {
                     height: Get.height * 0.014,
                   ),
                   GetBuilder<HomeScreenController>(
-                    builder: (controller) {
+                    builder: (homeScreenController) {
                       return Container(
                         width: MediaQuery.of(context).size.width * 0.92,
                         height: MediaQuery.of(context).size.height * 0.059,
@@ -370,7 +369,7 @@ class HomeScreen extends StatelessWidget {
                             child: Row(children: [
                               Icon(
                                 Icons.search,
-                                color: Colors.blue[800],
+                                color: Colors.grey[600],
                                 size: 20,
                               ),
                               Expanded(
@@ -389,6 +388,7 @@ class HomeScreen extends StatelessWidget {
                                                   .toString()
                                           : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
                                       height: 35,
+                                      width: 26,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -397,8 +397,10 @@ class HomeScreen extends StatelessWidget {
                                         .searchAction[index].filmName
                                         .toString(),
                                     style: TextStyle(
-                                        color: Colors.blue[800],
-                                        fontSize: 13.5),
+                                      color: Colors.grey[600],
+                                      letterSpacing: 0.3,
+                                      fontSize: 13,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -447,6 +449,13 @@ class HomeScreen extends StatelessWidget {
                                 title: homeScreenController.movieCategories[0],
                                 itemCount: homeScreenController
                                     .moviesModel.actionMovies!.length,
+                                onPres: () {
+                                  Get.to(() => CategoriesViewAll(
+                                        categoryTypes: homeScreenController
+                                            .moviesModel.actionMovies,
+                                        heading: "Action movies",
+                                      ));
+                                },
                                 builder: (BuildContext context, int idx) {
                                   return Container(
                                     decoration: BoxDecoration(
@@ -459,7 +468,7 @@ class HomeScreen extends StatelessWidget {
                                       children: [
                                         Container(
                                           margin: EdgeInsets.only(
-                                              top: 7, bottom: 6),
+                                              top: 7, bottom: 7),
                                           height: 136,
                                           width: 97,
                                           child: ClipRRect(
@@ -487,7 +496,7 @@ class HomeScreen extends StatelessWidget {
                                               .actionMovies![idx].filmName
                                               .toString(),
                                           style: TextStyle(
-                                            color: Colors.blue[800],
+                                            color: Colors.grey[600],
                                             fontSize: 12,
                                             letterSpacing: 0.3,
                                           ),
@@ -504,6 +513,13 @@ class HomeScreen extends StatelessWidget {
                                 title: homeScreenController.movieCategories[1],
                                 itemCount: homeScreenController
                                     .moviesModel.loveStories!.length,
+                                onPres: () {
+                                  Get.to(() => CategoriesViewAll(
+                                        categoryTypes: homeScreenController
+                                            .moviesModel.loveStories,
+                                        heading: "Love stories",
+                                      ));
+                                },
                                 builder: (BuildContext context, int idx) {
                                   return Container(
                                     decoration: BoxDecoration(
@@ -516,7 +532,7 @@ class HomeScreen extends StatelessWidget {
                                       children: [
                                         Container(
                                           margin: EdgeInsets.only(
-                                              top: 7, bottom: 6),
+                                              top: 7, bottom: 7),
                                           height: 136,
                                           width: 97,
                                           child: ClipRRect(
@@ -544,7 +560,7 @@ class HomeScreen extends StatelessWidget {
                                               .loveStories![idx].filmName
                                               .toString(),
                                           style: TextStyle(
-                                            color: Colors.blue[800],
+                                            color: Colors.grey[600],
                                             fontSize: 12,
                                             letterSpacing: 0.3,
                                           ),
@@ -561,6 +577,13 @@ class HomeScreen extends StatelessWidget {
                                 title: homeScreenController.movieCategories[2],
                                 itemCount: homeScreenController
                                     .moviesModel.horrorMovies!.length,
+                                onPres: () {
+                                  Get.to(() => CategoriesViewAll(
+                                        categoryTypes: homeScreenController
+                                            .moviesModel.horrorMovies,
+                                        heading: "Horror movies",
+                                      ));
+                                },
                                 builder: (BuildContext context, int idx) {
                                   return Container(
                                     decoration: BoxDecoration(
@@ -573,7 +596,7 @@ class HomeScreen extends StatelessWidget {
                                       children: [
                                         Container(
                                           margin: EdgeInsets.only(
-                                              top: 7, bottom: 6),
+                                              top: 7, bottom: 7),
                                           height: 136,
                                           width: 97,
                                           child: ClipRRect(
@@ -601,7 +624,7 @@ class HomeScreen extends StatelessWidget {
                                               .horrorMovies![idx].filmName
                                               .toString(),
                                           style: TextStyle(
-                                            color: Colors.blue[800],
+                                            color: Colors.grey[600],
                                             fontSize: 12,
                                             letterSpacing: 0.3,
                                           ),

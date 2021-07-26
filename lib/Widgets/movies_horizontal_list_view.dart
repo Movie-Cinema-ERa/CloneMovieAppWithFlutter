@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class MoviesListView extends StatelessWidget {
-  MoviesListView({Key? key, this.title, this.itemCount, this.builder})
+  MoviesListView(
+      {Key? key, this.title, this.itemCount, this.builder, this.onPres})
       : super(key: key);
   final String? title;
   final int? itemCount;
+  final Function()? onPres;
   final Widget Function(BuildContext, int)? builder;
 
   @override
@@ -27,12 +29,24 @@ class MoviesListView extends StatelessWidget {
                     letterSpacing: 0.5,
                   ),
                 ),
-                Text(
-                  "View more...",
-                  style: TextStyle(
-                    color: Colors.blue[900],
-                    fontSize: 12.4,
-                    letterSpacing: 0.5,
+                GestureDetector(
+                  onTap: onPres,
+                  child: Row(
+                    children: [
+                      Text(
+                        "View more",
+                        style: TextStyle(
+                          color: Colors.blue[900],
+                          fontSize: 12.4,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                      Icon(
+                        Icons.chevron_right,
+                        color: Colors.blue[900],
+                        size: 16,
+                      ),
+                    ],
                   ),
                 ),
               ],

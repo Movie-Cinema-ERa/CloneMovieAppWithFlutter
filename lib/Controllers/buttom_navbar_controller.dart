@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Screens/Favorite_screen.dart';
 import 'package:flutter_project/Screens/Home_screen.dart';
 import 'package:get/get.dart';
 
@@ -7,9 +8,9 @@ class ButtonNavBarController extends GetxController {
 
   List<Widget> pages = [
     HomeScreen(),
+    FavoriteScreen(),
     HomeScreen(),
-    HomeScreen(),
-  ].obs;
+  ];
 
   List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
@@ -18,5 +19,5 @@ class ButtonNavBarController extends GetxController {
         icon: Icon(Icons.favorite), label: "Favorite", tooltip: "Favorite"),
     BottomNavigationBarItem(
         icon: Icon(Icons.person), label: "Profile", tooltip: "Profile"),
-  ].obs;
+  ];
 }
