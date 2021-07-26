@@ -9,7 +9,7 @@ class HomeScreenController extends GetxController {
   final SecureStorage secureStorage = SecureStorage();
   var moviesModel = MoviesModel();
   List<ActionMovie> searchAction = <ActionMovie>[];
-  // List<ActionMovie>? allMovies = <ActionMovie>[];
+  List<ActionMovie> allMovies = <ActionMovie>[];
 
   var searchMoviesTxt = TextEditingController();
   var email = "".obs;
@@ -19,9 +19,7 @@ class HomeScreenController extends GetxController {
   @override
   void onInit() {
     getMovies();
-    // allMovies?.addAll(moviesModel.actionMovies! +
-    //     moviesModel.loveStories! +
-    //     moviesModel.horrorMovies!);
+
     super.onInit();
   }
 
@@ -70,7 +68,10 @@ class HomeScreenController extends GetxController {
   }
 
   getActionSearch({var query}) {
-    searchAction = moviesModel.actionMovies!.where(
+    allMovies = (moviesModel.actionMovies! +
+        moviesModel.loveStories! +
+        moviesModel.horrorMovies!);
+    searchAction = allMovies.where(
       (filmname) {
         final nameLower = filmname.filmName!.toLowerCase();
         final searchLower = query.toLowerCase();
