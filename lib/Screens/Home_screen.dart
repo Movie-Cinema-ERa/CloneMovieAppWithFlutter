@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_project/Controllers/home_screen_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
+import 'package:flutter_project/Screens/Movies_details_screen.dart';
 import 'package:flutter_project/Widgets/categories_view_all.dart';
 import 'package:flutter_project/Widgets/drawer_list_tile.dart';
 import 'package:flutter_project/Widgets/movies_horizontal_list_view.dart';
@@ -457,51 +458,59 @@ class HomeScreen extends StatelessWidget {
                                       ));
                                 },
                                 builder: (BuildContext context, int idx) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(7),
-                                      color: Colors.white,
+                                  return GestureDetector(
+                                    onTap: () => Get.to(
+                                      () => MoviesDetailsScreen(
+                                        moviesModel: homeScreenController
+                                            .moviesModel.actionMovies![idx],
+                                      ),
                                     ),
-                                    width: 111,
-                                    margin: EdgeInsets.only(right: 8),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              top: 7, bottom: 7),
-                                          height: 136,
-                                          width: 97,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: Image.network(
-                                              homeScreenController
-                                                          .moviesModel
-                                                          .actionMovies![idx]
-                                                          .filmImage !=
-                                                      null
-                                                  ? ApiClients.moviesPoster +
-                                                      homeScreenController
-                                                          .moviesModel
-                                                          .actionMovies![idx]
-                                                          .filmImage
-                                                          .toString()
-                                                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                                              fit: BoxFit.cover,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(7),
+                                        color: Colors.white,
+                                      ),
+                                      width: 111,
+                                      margin: EdgeInsets.only(right: 8),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                top: 7, bottom: 7),
+                                            height: 136,
+                                            width: 97,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Image.network(
+                                                homeScreenController
+                                                            .moviesModel
+                                                            .actionMovies![idx]
+                                                            .filmImage !=
+                                                        null
+                                                    ? ApiClients.moviesPoster +
+                                                        homeScreenController
+                                                            .moviesModel
+                                                            .actionMovies![idx]
+                                                            .filmImage
+                                                            .toString()
+                                                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Text(
-                                          homeScreenController.moviesModel
-                                              .actionMovies![idx].filmName
-                                              .toString(),
-                                          style: TextStyle(
-                                            color: Colors.grey[600],
-                                            fontSize: 12,
-                                            letterSpacing: 0.3,
+                                          Text(
+                                            homeScreenController.moviesModel
+                                                .actionMovies![idx].filmName
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: Colors.grey[600],
+                                              fontSize: 12,
+                                              letterSpacing: 0.3,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   );
                                 },
@@ -521,51 +530,59 @@ class HomeScreen extends StatelessWidget {
                                       ));
                                 },
                                 builder: (BuildContext context, int idx) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(7),
-                                      color: Colors.white,
+                                  return GestureDetector(
+                                    onTap: () => Get.to(
+                                      () => MoviesDetailsScreen(
+                                        moviesModel: homeScreenController
+                                            .moviesModel.loveStories![idx],
+                                      ),
                                     ),
-                                    width: 111,
-                                    margin: EdgeInsets.only(right: 8),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              top: 7, bottom: 7),
-                                          height: 136,
-                                          width: 97,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: Image.network(
-                                              homeScreenController
-                                                          .moviesModel
-                                                          .loveStories![idx]
-                                                          .filmImage !=
-                                                      null
-                                                  ? ApiClients.moviesPoster +
-                                                      homeScreenController
-                                                          .moviesModel
-                                                          .loveStories![idx]
-                                                          .filmImage
-                                                          .toString()
-                                                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                                              fit: BoxFit.cover,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(7),
+                                        color: Colors.white,
+                                      ),
+                                      width: 111,
+                                      margin: EdgeInsets.only(right: 8),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                top: 7, bottom: 7),
+                                            height: 136,
+                                            width: 97,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Image.network(
+                                                homeScreenController
+                                                            .moviesModel
+                                                            .loveStories![idx]
+                                                            .filmImage !=
+                                                        null
+                                                    ? ApiClients.moviesPoster +
+                                                        homeScreenController
+                                                            .moviesModel
+                                                            .loveStories![idx]
+                                                            .filmImage
+                                                            .toString()
+                                                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Text(
-                                          homeScreenController.moviesModel
-                                              .loveStories![idx].filmName
-                                              .toString(),
-                                          style: TextStyle(
-                                            color: Colors.grey[600],
-                                            fontSize: 12,
-                                            letterSpacing: 0.3,
+                                          Text(
+                                            homeScreenController.moviesModel
+                                                .loveStories![idx].filmName
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: Colors.grey[600],
+                                              fontSize: 12,
+                                              letterSpacing: 0.3,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   );
                                 },
@@ -585,51 +602,59 @@ class HomeScreen extends StatelessWidget {
                                       ));
                                 },
                                 builder: (BuildContext context, int idx) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(7),
-                                      color: Colors.white,
+                                  return GestureDetector(
+                                    onTap: () => Get.to(
+                                      () => MoviesDetailsScreen(
+                                        moviesModel: homeScreenController
+                                            .moviesModel.horrorMovies![idx],
+                                      ),
                                     ),
-                                    width: 111,
-                                    margin: EdgeInsets.only(right: 8),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              top: 7, bottom: 7),
-                                          height: 136,
-                                          width: 97,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: Image.network(
-                                              homeScreenController
-                                                          .moviesModel
-                                                          .horrorMovies![idx]
-                                                          .filmImage !=
-                                                      null
-                                                  ? ApiClients.moviesPoster +
-                                                      homeScreenController
-                                                          .moviesModel
-                                                          .horrorMovies![idx]
-                                                          .filmImage
-                                                          .toString()
-                                                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                                              fit: BoxFit.cover,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(7),
+                                        color: Colors.white,
+                                      ),
+                                      width: 111,
+                                      margin: EdgeInsets.only(right: 8),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                top: 7, bottom: 7),
+                                            height: 136,
+                                            width: 97,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: Image.network(
+                                                homeScreenController
+                                                            .moviesModel
+                                                            .horrorMovies![idx]
+                                                            .filmImage !=
+                                                        null
+                                                    ? ApiClients.moviesPoster +
+                                                        homeScreenController
+                                                            .moviesModel
+                                                            .horrorMovies![idx]
+                                                            .filmImage
+                                                            .toString()
+                                                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Text(
-                                          homeScreenController.moviesModel
-                                              .horrorMovies![idx].filmName
-                                              .toString(),
-                                          style: TextStyle(
-                                            color: Colors.grey[600],
-                                            fontSize: 12,
-                                            letterSpacing: 0.3,
+                                          Text(
+                                            homeScreenController.moviesModel
+                                                .horrorMovies![idx].filmName
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: Colors.grey[600],
+                                              fontSize: 12,
+                                              letterSpacing: 0.3,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   );
                                 },
