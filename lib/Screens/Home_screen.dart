@@ -482,20 +482,30 @@ class HomeScreen extends StatelessWidget {
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
-                                              child: Image.network(
-                                                homeScreenController
-                                                            .moviesModel
-                                                            .actionMovies![idx]
-                                                            .filmImage !=
-                                                        null
-                                                    ? ApiClients.moviesPoster +
-                                                        homeScreenController
-                                                            .moviesModel
-                                                            .actionMovies![idx]
-                                                            .filmImage
-                                                            .toString()
-                                                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                                                fit: BoxFit.cover,
+                                              child: Hero(
+                                                tag: homeScreenController
+                                                    .moviesModel
+                                                    .actionMovies![idx]
+                                                    .id
+                                                    .toString(),
+                                                child: Image.network(
+                                                  homeScreenController
+                                                              .moviesModel
+                                                              .actionMovies![
+                                                                  idx]
+                                                              .filmImage !=
+                                                          null
+                                                      ? ApiClients
+                                                              .moviesPoster +
+                                                          homeScreenController
+                                                              .moviesModel
+                                                              .actionMovies![
+                                                                  idx]
+                                                              .filmImage
+                                                              .toString()
+                                                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -554,20 +564,28 @@ class HomeScreen extends StatelessWidget {
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
-                                              child: Image.network(
-                                                homeScreenController
-                                                            .moviesModel
-                                                            .loveStories![idx]
-                                                            .filmImage !=
-                                                        null
-                                                    ? ApiClients.moviesPoster +
-                                                        homeScreenController
-                                                            .moviesModel
-                                                            .loveStories![idx]
-                                                            .filmImage
-                                                            .toString()
-                                                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                                                fit: BoxFit.cover,
+                                              child: Hero(
+                                                tag: homeScreenController
+                                                    .moviesModel
+                                                    .loveStories![idx]
+                                                    .id
+                                                    .toString(),
+                                                child: Image.network(
+                                                  homeScreenController
+                                                              .moviesModel
+                                                              .loveStories![idx]
+                                                              .filmImage !=
+                                                          null
+                                                      ? ApiClients
+                                                              .moviesPoster +
+                                                          homeScreenController
+                                                              .moviesModel
+                                                              .loveStories![idx]
+                                                              .filmImage
+                                                              .toString()
+                                                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -626,20 +644,30 @@ class HomeScreen extends StatelessWidget {
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(8),
-                                              child: Image.network(
-                                                homeScreenController
-                                                            .moviesModel
-                                                            .horrorMovies![idx]
-                                                            .filmImage !=
-                                                        null
-                                                    ? ApiClients.moviesPoster +
-                                                        homeScreenController
-                                                            .moviesModel
-                                                            .horrorMovies![idx]
-                                                            .filmImage
-                                                            .toString()
-                                                    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                                                fit: BoxFit.cover,
+                                              child: Hero(
+                                                tag: homeScreenController
+                                                    .moviesModel
+                                                    .horrorMovies![idx]
+                                                    .id
+                                                    .toString(),
+                                                child: Image.network(
+                                                  homeScreenController
+                                                              .moviesModel
+                                                              .horrorMovies![
+                                                                  idx]
+                                                              .filmImage !=
+                                                          null
+                                                      ? ApiClients
+                                                              .moviesPoster +
+                                                          homeScreenController
+                                                              .moviesModel
+                                                              .horrorMovies![
+                                                                  idx]
+                                                              .filmImage
+                                                              .toString()
+                                                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),

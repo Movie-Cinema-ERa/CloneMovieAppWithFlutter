@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';
 import 'package:flutter_project/Models/movies_model.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class MoviesDetailsScreen extends StatelessWidget {
@@ -12,6 +14,9 @@ class MoviesDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarBrightness: Brightness.dark),
+    );
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey[100],
@@ -46,10 +51,13 @@ class MoviesDetailsScreen extends StatelessWidget {
                           Container(
                             height: Get.height * 0.27,
                             width: Get.width,
-                            child: Image.network(
-                              ApiClients.moviesPoster +
-                                  moviesModel!.filmImage.toString(),
-                              fit: BoxFit.cover,
+                            child: Hero(
+                              tag: moviesModel!.id.toString(),
+                              child: Image.network(
+                                ApiClients.moviesPoster +
+                                    moviesModel!.filmImage.toString(),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           Stack(
@@ -147,6 +155,118 @@ class MoviesDetailsScreen extends StatelessWidget {
                         spreadRadius: 47,
                       ),
                     ]),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(
+                    left: Get.width * 0.04,
+                    right: Get.width * 0.04,
+                    top: Get.height * 0.01,
+                  ),
+                  child: Container(
+                    height: Get.height * 0.15,
+                    width: Get.width,
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Hero(
+                            tag: moviesModel!.id.toString(),
+                            child: Image.network(
+                              ApiClients.moviesPoster +
+                                  moviesModel!.filmImage.toString(),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                moviesModel!.filmName.toString(),
+                                style: TextStyle(
+                                  color: Colors.blue[900],
+                                  letterSpacing: 0.3,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Price : Rs." +
+                                        moviesModel!.price.toString(),
+                                    style: TextStyle(
+                                      color: Colors.blue[800],
+                                      letterSpacing: 0.3,
+                                      fontSize: 12.5,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 11,
+                                    child: VerticalDivider(
+                                      color: Colors.blue[700]!.withOpacity(0.5),
+                                      thickness: 1,
+                                      width: 10,
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.star,
+                                        size: 13,
+                                        color: Colors.yellow[800],
+                                      ),
+                                      SizedBox(
+                                        width: 2,
+                                      ),
+                                      Text(
+                                        "0.0",
+                                        style: TextStyle(
+                                          color: Colors.blue[800],
+                                          letterSpacing: 0.3,
+                                          fontSize: 12.5,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              Container(
+                                height: 25,
+                                margin:
+                                    EdgeInsets.only(top: Get.height * 0.066),
+                                child: ElevatedButton.icon(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    FontAwesomeIcons.pen,
+                                    color: Colors.blue[800],
+                                    size: 10,
+                                  ),
+                                  label: Text(
+                                    "Review",
+                                    style: TextStyle(
+                                      letterSpacing: 0.4,
+                                      fontSize: 12,
+                                      color: Colors.blue[800],
+                                    ),
+                                  ),
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    visualDensity: VisualDensity(
+                                        horizontal: -4, vertical: 0),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 )
               ],

@@ -62,12 +62,15 @@ class CategoriesViewAll extends StatelessWidget {
                     width: 112,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.network(
-                        categoryTypes![index].filmImage != null
-                            ? ApiClients.moviesPoster +
-                                categoryTypes![index].filmImage.toString()
-                            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                        fit: BoxFit.cover,
+                      child: Hero(
+                        tag: categoryTypes![index].id.toString(),
+                        child: Image.network(
+                          categoryTypes![index].filmImage != null
+                              ? ApiClients.moviesPoster +
+                                  categoryTypes![index].filmImage.toString()
+                              : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),

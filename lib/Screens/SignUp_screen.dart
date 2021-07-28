@@ -24,6 +24,7 @@ class SignUpScreen extends StatelessWidget {
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
         body: SingleChildScrollView(
+          reverse: true,
           child: Center(
             child: Container(
               child: Column(

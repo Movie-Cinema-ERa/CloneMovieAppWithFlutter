@@ -16,42 +16,44 @@ class SplashScreen extends StatelessWidget {
       ),
     );
     return SafeArea(
-        child: Scaffold(
-            body: Center(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          color: Colors.blue.shade900,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: MediaQuery.of(context).size.height * 0.3),
-            RotationTransition(
-              turns: splashController.animation!,
-              child: Image.asset(
-                "assets/images/cinemasingleicon.png",
-                height: 35,
-                width: 35,
-              ),
+      child: Scaffold(
+        body: Center(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: Colors.blue.shade900,
             ),
-            Image.asset(
-              "assets/images/splash_icon.png",
-              height: 84,
-              width: 84,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+                RotationTransition(
+                  turns: splashController.animation!,
+                  child: Image.asset(
+                    "assets/images/cinemasingleicon.png",
+                    height: 35,
+                    width: 35,
+                  ),
+                ),
+                Image.asset(
+                  "assets/images/splash_icon.png",
+                  height: 84,
+                  width: 84,
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.41,
+                ),
+                Text("Enjoy the movies",
+                    style: TextStyle(
+                        color: Colors.blue[100],
+                        fontSize: 14,
+                        fontFamily: GoogleFonts.notoSans().fontFamily)),
+              ],
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.41,
-            ),
-            Text("Enjoy the movies",
-                style: TextStyle(
-                    color: Colors.blue[100],
-                    fontSize: 14,
-                    fontFamily: GoogleFonts.notoSans().fontFamily)),
-          ],
+          ),
         ),
       ),
-    )));
+    );
   }
 }
