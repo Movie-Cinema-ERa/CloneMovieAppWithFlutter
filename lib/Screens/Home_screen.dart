@@ -361,51 +361,60 @@ class HomeScreen extends StatelessWidget {
                     ? ListView.builder(
                         itemCount: homeScreenController.searchAction.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return Container(
-                            padding: EdgeInsets.only(
-                              left: Get.width * 0.06,
-                              right: Get.width * 0.06,
-                              top: Get.height * 0.008,
-                            ),
-                            child: Row(children: [
-                              Icon(
-                                Icons.search,
-                                color: Colors.grey[600],
-                                size: 20,
+                          return GestureDetector(
+                            onTap: () => Get.to(
+                              () => MoviesDetailsScreen(
+                                moviesModel:
+                                    homeScreenController.searchAction[index],
                               ),
-                              Expanded(
-                                child: ListTile(
-                                  dense: true,
-                                  visualDensity: VisualDensity(
-                                      horizontal: -4, vertical: -1),
-                                  leading: ClipRRect(
-                                    borderRadius: BorderRadius.circular(4),
-                                    child: Image.network(
-                                      homeScreenController.searchAction[index]
-                                              .filmImage!.isNotEmpty
-                                          ? ApiClients.moviesPoster +
-                                              homeScreenController
-                                                  .searchAction[index].filmImage
-                                                  .toString()
-                                          : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                                      height: 35,
-                                      width: 26,
-                                      fit: BoxFit.cover,
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                left: Get.width * 0.06,
+                                right: Get.width * 0.06,
+                                top: Get.height * 0.008,
+                              ),
+                              child: Row(children: [
+                                Icon(
+                                  Icons.search,
+                                  color: Colors.grey[600],
+                                  size: 20,
+                                ),
+                                Expanded(
+                                  child: ListTile(
+                                    dense: true,
+                                    visualDensity: VisualDensity(
+                                        horizontal: -4, vertical: -1),
+                                    leading: ClipRRect(
+                                      borderRadius: BorderRadius.circular(4),
+                                      child: Image.network(
+                                        homeScreenController.searchAction[index]
+                                                .filmImage!.isNotEmpty
+                                            ? ApiClients.moviesPoster +
+                                                homeScreenController
+                                                    .searchAction[index]
+                                                    .filmImage
+                                                    .toString()
+                                            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                        height: 35,
+                                        width: 26,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
-                                  ),
-                                  title: Text(
-                                    homeScreenController
-                                        .searchAction[index].filmName
-                                        .toString(),
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      letterSpacing: 0.3,
-                                      fontSize: 13,
+                                    title: Text(
+                                      homeScreenController
+                                          .searchAction[index].filmName
+                                          .toString(),
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                        letterSpacing: 0.3,
+                                        fontSize: 13,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ]),
+                              ]),
+                            ),
                           );
                         },
                       )
@@ -421,19 +430,27 @@ class HomeScreen extends StatelessWidget {
                               CarouselSlider(
                                 items: homeScreenController
                                     .moviesModel.sliderMovies!
-                                    .map((slider) => Stack(
-                                          fit: StackFit.expand,
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Image.network(
-                                                ApiClients.moviesPoster +
-                                                    slider.filmImage.toString(),
-                                                fit: BoxFit.cover,
-                                              ),
+                                    .map((slider) => GestureDetector(
+                                          onTap: () => Get.to(
+                                            () => MoviesDetailsScreen(
+                                              moviesModel: slider,
                                             ),
-                                          ],
+                                          ),
+                                          child: Stack(
+                                            fit: StackFit.expand,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Image.network(
+                                                  ApiClients.moviesPoster +
+                                                      slider.filmImage
+                                                          .toString(),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ))
                                     .toList(),
                                 options: CarouselOptions(

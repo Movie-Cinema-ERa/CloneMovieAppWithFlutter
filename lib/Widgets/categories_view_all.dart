@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Controllers/home_screen_controller.dart';
 import 'package:flutter_project/Models/movies_model.dart';
+import 'package:flutter_project/Screens/Movies_details_screen.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +11,7 @@ class CategoriesViewAll extends StatelessWidget {
   final String? heading;
   final List<ActionMovie>? categoryTypes;
   final HomeScreenController homeScreenController =
-      Get.find<HomeScreenController>();
+      Get.put(HomeScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -49,40 +50,47 @@ class CategoriesViewAll extends StatelessWidget {
           ),
           itemCount: categoryTypes!.length,
           itemBuilder: (BuildContext context, int index) {
-            return Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                color: Colors.white,
+            return GestureDetector(
+              onTap: () => Get.to(
+                () => MoviesDetailsScreen(
+                  moviesModel: categoryTypes![index],
+                ),
               ),
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 8, bottom: 7),
-                    height: 150,
-                    width: 112,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Hero(
-                        tag: categoryTypes![index].id.toString(),
-                        child: Image.network(
-                          categoryTypes![index].filmImage != null
-                              ? ApiClients.moviesPoster +
-                                  categoryTypes![index].filmImage.toString()
-                              : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                          fit: BoxFit.cover,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 8, bottom: 7),
+                      height: 150,
+                      width: 112,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Hero(
+                          tag: categoryTypes![index].id.toString(),
+                          child: Image.network(
+                            categoryTypes![index].filmImage != null
+                                ? ApiClients.moviesPoster +
+                                    categoryTypes![index].filmImage.toString()
+                                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Text(
-                    categoryTypes![index].filmName.toString(),
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12,
-                      letterSpacing: 0.3,
+                    Text(
+                      categoryTypes![index].filmName.toString(),
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                        letterSpacing: 0.3,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },
