@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/BottomNavBar/ButtomNavBar.dart';
+import 'package:flutter_project/Controllers/Movies_details_controller.dart';
 import 'package:flutter_project/Controllers/home_screen_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Screens/loginScreen.dart';
@@ -16,6 +17,8 @@ class SplashController extends GetxController
   final LoginController loginController = Get.put(LoginController());
   final HomeScreenController homeScreenController =
       Get.put(HomeScreenController());
+  final MoviesDetailsController moviesDetailsController =
+      Get.find<MoviesDetailsController>();
 
   @override
   void onInit() {
@@ -43,6 +46,9 @@ class SplashController extends GetxController
         } else {
           homeScreenController.getEmail();
           homeScreenController.getName();
+          moviesDetailsController.getUserid();
+          moviesDetailsController.getFavoriteToken();
+
           Timer(Duration(seconds: 3), () {
             Get.off(() => BottomNavBar());
           });

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';
+import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Models/movies_model.dart';
 import 'package:flutter_project/Widgets/movies_details_richText.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
@@ -12,6 +13,7 @@ class MoviesDetailsScreen extends StatelessWidget {
   final ActionMovie? moviesModel;
   final MoviesDetailsController moviesDetailsController =
       Get.put(MoviesDetailsController());
+  final LoginController loginController = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,34 @@ class MoviesDetailsScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.grey[100],
+        floatingActionButton: Container(
+          width: 44,
+          child: GetBuilder<MoviesDetailsController>(
+            builder: (controller) {
+              return FloatingActionButton(
+                backgroundColor: Colors.blue[800],
+                onPressed: () {
+                  if (loginController.firebaseAuth.currentUser == null) {
+                    controller.addFavourite(
+                        favoriteToken: controller.favoriteToken,
+                        moviesId: moviesModel!.id.toString(),
+                        userId: controller.userId);
+                  } else {
+                    controller.addFavourite(
+                        favoriteToken:
+                            loginController.firebaseAuth.currentUser!.uid,
+                        moviesId: moviesModel!.id.toString(),
+                        userId: loginController.firebaseAuth.currentUser!.uid);
+                  }
+                },
+                child: Icon(
+                  FontAwesomeIcons.heart,
+                  size: 16,
+                ),
+              );
+            },
+          ),
+        ),
         body: SingleChildScrollView(
           child: Container(
             child: GetBuilder<MoviesDetailsController>(builder: (controller) {
