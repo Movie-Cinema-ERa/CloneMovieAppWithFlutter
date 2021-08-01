@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/BottomNavBar/ButtomNavBar.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';
+import 'package:flutter_project/Controllers/favourite_list_controller.dart';
 import 'package:flutter_project/Controllers/home_screen_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Screens/loginScreen.dart';
@@ -24,22 +25,22 @@ class SplashController extends GetxController
   void onInit() {
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 2),
     );
     animationController!.forward();
     animation = Tween(
       begin: 0.0,
-      end: 950.0,
+      end: 850.0,
     ).animate(animationController!);
 
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 1), () {
       secureStorage.readKey(key: 'email').then((value) {
         email = value;
         if (email == null) {
           if (loginController.firebaseAuth.currentUser != null) {
             Get.off(() => BottomNavBar());
           } else {
-            Timer(Duration(seconds: 3), () {
+            Timer(Duration(seconds: 2), () {
               Get.off(() => LoginScreen());
             });
           }
@@ -48,8 +49,7 @@ class SplashController extends GetxController
           homeScreenController.getName();
           moviesDetailsController.getUserid();
           moviesDetailsController.getFavoriteToken();
-
-          Timer(Duration(seconds: 3), () {
+          Timer(Duration(seconds: 2), () {
             Get.off(() => BottomNavBar());
           });
         }

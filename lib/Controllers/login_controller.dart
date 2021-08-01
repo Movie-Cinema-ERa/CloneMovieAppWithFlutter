@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/BottomNavBar/ButtomNavBar.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';
+import 'package:flutter_project/Controllers/favourite_list_controller.dart';
 import 'package:flutter_project/Models/Login_model.dart';
 import 'package:flutter_project/Screens/loginScreen.dart';
 import 'package:flutter_project/Services/ServicesApi.dart';
@@ -21,8 +22,8 @@ class LoginController extends GetxController {
   final SecureStorage secureStorage = SecureStorage();
   var isLogin = false.obs;
   String? favouriteToken;
-  MoviesDetailsController moviesDetailsController =
-      Get.put(MoviesDetailsController());
+  final MoviesDetailsController moviesDetailsController =
+      Get.find<MoviesDetailsController>();
 
   @override
   void onInit() {
@@ -81,7 +82,6 @@ class LoginController extends GetxController {
     SecureStorage().deleteKey(key: 'name');
     SecureStorage().deleteKey(key: 'UserId');
     SecureStorage().deleteKey(key: 'FavoriteToken');
-
     Get.off(LoginScreen());
   }
 

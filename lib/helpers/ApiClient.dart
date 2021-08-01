@@ -8,4 +8,6 @@ class ApiClients {
   static String signup = "create-user.php";
   static String movies = "mainMovies.php";
   static String favoriteAdd = "FavouriteAdd.php";
+  static String favoriteList = "FavouriteList.php";
+  static String favoriteRemove = "FavouriteRemove.php";
 }

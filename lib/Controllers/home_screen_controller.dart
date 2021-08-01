@@ -39,7 +39,7 @@ class HomeScreenController extends GetxController {
     return name.value;
   }
 
-  getMovies() {
+  getMovies() async {
     try {
       ServicesApi.movies().then((response) {
         if (response != null) {
@@ -57,7 +57,7 @@ class HomeScreenController extends GetxController {
                 size: 18,
               ),
               duration: Duration(seconds: 2),
-              message: "Unable to load movies !!",
+              message: "No internet connection !!",
             ),
           );
         }

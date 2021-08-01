@@ -23,8 +23,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        statusBarColor: Colors.grey.shade100,
-      ),
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.dark),
     );
     return GestureDetector(
       onTap: () {
@@ -208,7 +208,7 @@ class HomeScreen extends StatelessWidget {
                     return GestureDetector(
                       onTap: () => Scaffold.of(context).openDrawer(),
                       child: Container(
-                        width: 25,
+                        width: 28,
                         child: CircleAvatar(
                           child: ClipOval(
                             child: Image.network(
@@ -230,18 +230,19 @@ class HomeScreen extends StatelessWidget {
           centerTitle: true,
           title: RichText(
             text: TextSpan(
-                text: "Cinema",
-                style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 0.5,
-                    color: Colors.blue.shade900),
-                children: [
-                  TextSpan(
-                    text: " Era",
-                    style: TextStyle(color: Colors.blue.shade700, fontSize: 15),
-                  )
-                ]),
+              text: "Cinema",
+              style: TextStyle(
+                  fontSize: 17.3,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.5,
+                  color: Colors.blue.shade900),
+              children: [
+                TextSpan(
+                  text: " Era",
+                  style: TextStyle(color: Colors.blue.shade700, fontSize: 15.3),
+                )
+              ],
+            ),
           ),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(Get.height * 0.13),
@@ -264,7 +265,7 @@ class HomeScreen extends StatelessWidget {
                             TextSpan(
                               text: "\nand watch with fun...",
                               style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 12.5,
                                 color: Colors.grey.shade700,
                                 fontWeight: FontWeight.normal,
                                 letterSpacing: 0.2,
@@ -301,6 +302,7 @@ class HomeScreen extends StatelessWidget {
                               suffixIcon: homeScreenController
                                       .searchMoviesTxt.text.isNotEmpty
                                   ? IconButton(
+                                      padding: EdgeInsets.all(0.0),
                                       icon: Icon(
                                         Icons.clear,
                                         size: 15,
@@ -443,9 +445,12 @@ class HomeScreen extends StatelessWidget {
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                                 child: Image.network(
-                                                  ApiClients.moviesPoster +
-                                                      slider.filmImage
-                                                          .toString(),
+                                                  slider.filmImage != null
+                                                      ? ApiClients
+                                                              .moviesPoster +
+                                                          slider.filmImage
+                                                              .toString()
+                                                      : "https://static.thenounproject.com/png/340719-200.png",
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -520,7 +525,7 @@ class HomeScreen extends StatelessWidget {
                                                                   idx]
                                                               .filmImage
                                                               .toString()
-                                                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                                      : "https://static.thenounproject.com/png/340719-200.png",
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -600,7 +605,7 @@ class HomeScreen extends StatelessWidget {
                                                               .loveStories![idx]
                                                               .filmImage
                                                               .toString()
-                                                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                                      : "https://static.thenounproject.com/png/340719-200.png",
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -682,7 +687,7 @@ class HomeScreen extends StatelessWidget {
                                                                   idx]
                                                               .filmImage
                                                               .toString()
-                                                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                                      : "https://static.thenounproject.com/png/340719-200.png",
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
