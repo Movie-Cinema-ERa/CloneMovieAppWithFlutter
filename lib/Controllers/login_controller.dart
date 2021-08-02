@@ -56,6 +56,7 @@ class LoginController extends GetxController {
               .writeKey(key: 'UserId', value: response.id.toString());
           moviesDetailsController.getUserid();
           moviesDetailsController.getFavoriteToken();
+          Get.lazyPut(() => FavouriteListController());
           Fluttertoast.showToast(msg: "Successfully you are logged in");
           Get.off(() => BottomNavBar());
         } else {
@@ -119,7 +120,6 @@ class LoginController extends GetxController {
         OAuthCredential oAuthCredential = GoogleAuthProvider.credential(
             accessToken: googleSignInAuthentication.accessToken,
             idToken: googleSignInAuthentication.idToken);
-
         await firebaseAuth.signInWithCredential(oAuthCredential);
         Fluttertoast.showToast(msg: "Successfully you are logged in");
         Get.back();

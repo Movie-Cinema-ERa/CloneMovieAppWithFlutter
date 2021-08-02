@@ -18,13 +18,14 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Colors.grey[50],
+        statusBarColor: Colors.grey[100],
         statusBarIconBrightness: Brightness.dark));
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
+        backgroundColor: Colors.grey[100],
         body: SingleChildScrollView(
-          reverse: true,
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Center(
             child: Container(
               child: Column(

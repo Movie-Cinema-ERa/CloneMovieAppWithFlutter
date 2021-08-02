@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/BottomNavBar/ButtomNavBar.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';
-import 'package:flutter_project/Controllers/favourite_list_controller.dart';
 import 'package:flutter_project/Controllers/home_screen_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Screens/loginScreen.dart';

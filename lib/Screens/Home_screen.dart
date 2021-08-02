@@ -22,9 +22,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarBrightness: Brightness.dark),
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
     return GestureDetector(
       onTap: () {
@@ -184,539 +182,562 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        appBar: AppBar(
-          backgroundColor: Colors.grey[100],
-          leading: Builder(
-            builder: (context) {
-              return GestureDetector(
-                onTap: () => Scaffold.of(context).openDrawer(),
-                child: Image.asset(
-                  "assets/images/drawer.png",
-                  color: Colors.blue.shade900,
-                  scale: 50,
-                ),
-              );
-            },
-          ),
-          actions: [
-            Padding(
-                padding: EdgeInsets.only(
-                  right: Get.height * 0.026,
-                ),
-                child: Builder(
-                  builder: (context) {
-                    return GestureDetector(
-                      onTap: () => Scaffold.of(context).openDrawer(),
-                      child: Container(
-                        width: 28,
-                        child: CircleAvatar(
-                          child: ClipOval(
-                            child: Image.network(
-                              loginController.firebaseAuth.currentUser != null
-                                  ? loginController
-                                      .firebaseAuth.currentUser!.photoURL
-                                      .toString()
-                                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+        body: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (context, value) => [
+            SliverAppBar(
+              snap: true,
+              pinned: true,
+              floating: true,
+              backgroundColor: Colors.grey[100],
+              leading: Builder(
+                builder: (context) {
+                  return GestureDetector(
+                    onTap: () => Scaffold.of(context).openDrawer(),
+                    child: Image.asset(
+                      "assets/images/drawer.png",
+                      color: Colors.blue.shade900,
+                      scale: 50,
+                    ),
+                  );
+                },
+              ),
+              actions: [
+                Padding(
+                    padding: EdgeInsets.only(
+                      right: Get.height * 0.026,
+                    ),
+                    child: Builder(
+                      builder: (context) {
+                        return GestureDetector(
+                          onTap: () => Scaffold.of(context).openDrawer(),
+                          child: Container(
+                            width: 28,
+                            child: CircleAvatar(
+                              child: ClipOval(
+                                child: Image.network(
+                                  loginController.firebaseAuth.currentUser !=
+                                          null
+                                      ? loginController
+                                          .firebaseAuth.currentUser!.photoURL
+                                          .toString()
+                                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                    );
-                  },
-                ))
-          ],
-          elevation: 0.0,
-          brightness: Brightness.light,
-          centerTitle: true,
-          title: RichText(
-            text: TextSpan(
-              text: "Cinema",
-              style: TextStyle(
-                  fontSize: 17.3,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.5,
-                  color: Colors.blue.shade900),
-              children: [
-                TextSpan(
-                  text: " Era",
-                  style: TextStyle(color: Colors.blue.shade700, fontSize: 15.3),
-                )
+                        );
+                      },
+                    ))
               ],
-            ),
-          ),
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(Get.height * 0.13),
-            child: Container(
-              padding: EdgeInsets.only(
-                  left: Get.width * 0.06, right: Get.width * 0.06),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: RichText(
-                      text: TextSpan(
-                          text: "Discover Movies!!",
-                          style: TextStyle(
-                              fontSize: 16.3,
-                              fontWeight: FontWeight.w900,
-                              letterSpacing: 0.7,
-                              color: Colors.grey.shade800),
-                          children: [
-                            TextSpan(
-                              text: "\nand watch with fun...",
-                              style: TextStyle(
-                                fontSize: 12.5,
-                                color: Colors.grey.shade700,
-                                fontWeight: FontWeight.normal,
-                                letterSpacing: 0.2,
-                              ),
-                            ),
-                          ]),
-                    ),
-                  ),
-                  SizedBox(
-                    height: Get.height * 0.014,
-                  ),
-                  GetBuilder<HomeScreenController>(
-                    builder: (homeScreenController) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width * 0.92,
-                        height: MediaQuery.of(context).size.height * 0.059,
-                        child: TextFormField(
-                          controller: homeScreenController.searchMoviesTxt,
-                          onChanged: (searchMovies) {
-                            homeScreenController.getActionSearch(
-                                query: searchMovies);
-                          },
-                          style:
-                              TextStyle(color: Colors.grey[600], fontSize: 15),
-                          keyboardType: TextInputType.text,
-                          cursorColor: Colors.grey.shade500,
-                          decoration: InputDecoration(
-                              fillColor: Colors.grey.shade300,
-                              filled: true,
-                              hintStyle:
-                                  TextStyle(fontSize: 15, color: Colors.grey),
-                              contentPadding: EdgeInsets.only(top: 0.0),
-                              isDense: true,
-                              suffixIcon: homeScreenController
-                                      .searchMoviesTxt.text.isNotEmpty
-                                  ? IconButton(
-                                      padding: EdgeInsets.all(0.0),
-                                      icon: Icon(
-                                        Icons.clear,
-                                        size: 15,
-                                        color: Colors.grey.shade500,
-                                      ),
-                                      onPressed: () {
-                                        homeScreenController.searchMoviesTxt
-                                            .clear();
-                                        homeScreenController.searchAction
-                                            .clear();
-
-                                        homeScreenController.update();
-                                      },
-                                    )
-                                  : Text(
-                                      "",
-                                    ),
-                              prefixIcon: Icon(
-                                Icons.search,
-                                size: 18,
-                                color: Colors.grey.shade600,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(style: BorderStyle.none),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide(style: BorderStyle.none),
-                              ),
-                              hintText: "Search movies..."),
-                        ),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 2,
-                  ),
-                ],
+              elevation: 0.0,
+              brightness: Brightness.light,
+              centerTitle: true,
+              title: RichText(
+                text: TextSpan(
+                  text: "Cinema",
+                  style: TextStyle(
+                      fontSize: 17.3,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 0.5,
+                      color: Colors.blue.shade900),
+                  children: [
+                    TextSpan(
+                      text: " Era",
+                      style: TextStyle(
+                          color: Colors.blue.shade700, fontSize: 15.3),
+                    )
+                  ],
+                ),
               ),
-            ),
-          ),
-        ),
-        body: GetBuilder<HomeScreenController>(
-          builder: (homeScreenController) {
-            return homeScreenController.isload == false
-                ? Center(
-                    child: Container(
-                      height: 26,
-                      width: 26,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2.4,
-                        backgroundColor: Colors.grey[300],
-                      ),
-                    ),
-                  )
-                : homeScreenController.searchMoviesTxt.text != ""
-                    ? ListView.builder(
-                        itemCount: homeScreenController.searchAction.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () => Get.to(
-                              () => MoviesDetailsScreen(
-                                moviesModel:
-                                    homeScreenController.searchAction[index],
-                              ),
-                            ),
-                            child: Container(
-                              padding: EdgeInsets.only(
-                                left: Get.width * 0.06,
-                                right: Get.width * 0.06,
-                                top: Get.height * 0.008,
-                              ),
-                              child: Row(children: [
-                                Icon(
-                                  Icons.search,
-                                  color: Colors.grey[600],
-                                  size: 20,
-                                ),
-                                Expanded(
-                                  child: ListTile(
-                                    dense: true,
-                                    visualDensity: VisualDensity(
-                                        horizontal: -4, vertical: -1),
-                                    leading: ClipRRect(
-                                      borderRadius: BorderRadius.circular(4),
-                                      child: Image.network(
-                                        homeScreenController.searchAction[index]
-                                                .filmImage!.isNotEmpty
-                                            ? ApiClients.moviesPoster +
-                                                homeScreenController
-                                                    .searchAction[index]
-                                                    .filmImage
-                                                    .toString()
-                                            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
-                                        height: 35,
-                                        width: 26,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    title: Text(
-                                      homeScreenController
-                                          .searchAction[index].filmName
-                                          .toString(),
-                                      style: TextStyle(
-                                        color: Colors.grey[600],
-                                        letterSpacing: 0.3,
-                                        fontSize: 13,
-                                      ),
-                                    ),
+              bottom: PreferredSize(
+                preferredSize: Size.fromHeight(Get.height * 0.1354),
+                child: Container(
+                  padding: EdgeInsets.only(
+                      left: Get.width * 0.06, right: Get.width * 0.06),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: RichText(
+                          text: TextSpan(
+                              text: "Discover Movies!!",
+                              style: TextStyle(
+                                  fontSize: 16.3,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 0.7,
+                                  color: Colors.grey.shade800),
+                              children: [
+                                TextSpan(
+                                  text: "\nand watch with fun...",
+                                  style: TextStyle(
+                                    fontSize: 12.5,
+                                    color: Colors.grey.shade700,
+                                    fontWeight: FontWeight.normal,
+                                    letterSpacing: 0.2,
                                   ),
                                 ),
                               ]),
+                        ),
+                      ),
+                      SizedBox(
+                        height: Get.height * 0.014,
+                      ),
+                      GetBuilder<HomeScreenController>(
+                        builder: (homeScreenController) {
+                          return Container(
+                            width: MediaQuery.of(context).size.width * 0.92,
+                            height: MediaQuery.of(context).size.height * 0.059,
+                            child: TextFormField(
+                              controller: homeScreenController.searchMoviesTxt,
+                              onChanged: (searchMovies) {
+                                homeScreenController.getActionSearch(
+                                    query: searchMovies);
+                              },
+                              style: TextStyle(
+                                  color: Colors.grey[600], fontSize: 15),
+                              keyboardType: TextInputType.text,
+                              cursorColor: Colors.grey.shade500,
+                              decoration: InputDecoration(
+                                  fillColor: Colors.grey.shade300,
+                                  filled: true,
+                                  hintStyle: TextStyle(
+                                      fontSize: 15, color: Colors.grey),
+                                  contentPadding: EdgeInsets.only(top: 0.0),
+                                  isDense: true,
+                                  suffixIcon: homeScreenController
+                                          .searchMoviesTxt.text.isNotEmpty
+                                      ? IconButton(
+                                          padding: EdgeInsets.all(0.0),
+                                          icon: Icon(
+                                            Icons.clear,
+                                            size: 15,
+                                            color: Colors.grey.shade500,
+                                          ),
+                                          onPressed: () {
+                                            homeScreenController.searchMoviesTxt
+                                                .clear();
+                                            homeScreenController.searchAction
+                                                .clear();
+
+                                            homeScreenController.update();
+                                          },
+                                        )
+                                      : Text(
+                                          "",
+                                        ),
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    size: 18,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide:
+                                        BorderSide(style: BorderStyle.none),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide:
+                                        BorderSide(style: BorderStyle.none),
+                                  ),
+                                  hintText: "Search movies..."),
                             ),
                           );
                         },
-                      )
-                    : SingleChildScrollView(
-                        keyboardDismissBehavior:
-                            ScrollViewKeyboardDismissBehavior.onDrag,
-                        child: Container(
-                          margin: EdgeInsets.only(top: 11),
-                          padding: EdgeInsets.only(
-                              left: Get.width * 0.06, right: Get.width * 0.06),
-                          child: Column(
-                            children: [
-                              CarouselSlider(
-                                items: homeScreenController
-                                    .moviesModel.sliderMovies!
-                                    .map((slider) => GestureDetector(
-                                          onTap: () => Get.to(
-                                            () => MoviesDetailsScreen(
-                                              moviesModel: slider,
+                      ),
+                      SizedBox(
+                        height: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+          body: GetBuilder<HomeScreenController>(
+            builder: (homeScreenController) {
+              return homeScreenController.isload == false
+                  ? Center(
+                      child: Container(
+                        height: 26,
+                        width: 26,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.4,
+                          backgroundColor: Colors.grey[300],
+                        ),
+                      ),
+                    )
+                  : homeScreenController.searchMoviesTxt.text != ""
+                      ? ListView.builder(
+                          itemCount: homeScreenController.searchAction.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () => Get.to(
+                                () => MoviesDetailsScreen(
+                                  moviesModel:
+                                      homeScreenController.searchAction[index],
+                                ),
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.only(
+                                  left: Get.width * 0.06,
+                                  right: Get.width * 0.06,
+                                  top: Get.height * 0.008,
+                                ),
+                                child: Row(children: [
+                                  Icon(
+                                    Icons.search,
+                                    color: Colors.grey[600],
+                                    size: 20,
+                                  ),
+                                  Expanded(
+                                    child: ListTile(
+                                      dense: true,
+                                      visualDensity: VisualDensity(
+                                          horizontal: -4, vertical: -1),
+                                      leading: ClipRRect(
+                                        borderRadius: BorderRadius.circular(4),
+                                        child: Image.network(
+                                          homeScreenController
+                                                  .searchAction[index]
+                                                  .filmImage!
+                                                  .isNotEmpty
+                                              ? ApiClients.moviesPoster +
+                                                  homeScreenController
+                                                      .searchAction[index]
+                                                      .filmImage
+                                                      .toString()
+                                              : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0w-e7TtEvdRf9nkID8bQw40NxvYtGcjSNmylL4ElvAAfHjrXs5QD8xuQ-nCpckYqkTSKSP9tXElc&usqp=CAU",
+                                          height: 35,
+                                          width: 26,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      title: Text(
+                                        homeScreenController
+                                            .searchAction[index].filmName
+                                            .toString(),
+                                        style: TextStyle(
+                                          color: Colors.grey[600],
+                                          letterSpacing: 0.3,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
+                              ),
+                            );
+                          },
+                        )
+                      : SingleChildScrollView(
+                          keyboardDismissBehavior:
+                              ScrollViewKeyboardDismissBehavior.onDrag,
+                          child: Container(
+                            margin: EdgeInsets.only(top: 11),
+                            padding: EdgeInsets.only(
+                                left: Get.width * 0.06,
+                                right: Get.width * 0.06),
+                            child: Column(
+                              children: [
+                                CarouselSlider(
+                                  items: homeScreenController
+                                      .moviesModel.sliderMovies!
+                                      .map((slider) => GestureDetector(
+                                            onTap: () => Get.to(
+                                              () => MoviesDetailsScreen(
+                                                moviesModel: slider,
+                                              ),
                                             ),
-                                          ),
-                                          child: Stack(
-                                            fit: StackFit.expand,
-                                            children: [
-                                              ClipRRect(
+                                            child: Stack(
+                                              fit: StackFit.expand,
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  child: Image.network(
+                                                    slider.filmImage != null
+                                                        ? ApiClients
+                                                                .moviesPoster +
+                                                            slider.filmImage
+                                                                .toString()
+                                                        : "https://static.thenounproject.com/png/340719-200.png",
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ))
+                                      .toList(),
+                                  options: CarouselOptions(
+                                      enlargeCenterPage: true,
+                                      aspectRatio: 2.3,
+                                      viewportFraction: 0.77,
+                                      enableInfiniteScroll: true,
+                                      autoPlay: true),
+                                ),
+                                SizedBox(
+                                  height: 13,
+                                ),
+                                MoviesListView(
+                                  title:
+                                      homeScreenController.movieCategories[0],
+                                  itemCount: homeScreenController
+                                      .moviesModel.actionMovies!.length,
+                                  onPres: () {
+                                    Get.to(() => CategoriesViewAll(
+                                          categoryTypes: homeScreenController
+                                              .moviesModel.actionMovies,
+                                          heading: "Action movies",
+                                        ));
+                                  },
+                                  builder: (BuildContext context, int idx) {
+                                    return GestureDetector(
+                                      onTap: () => Get.to(
+                                        () => MoviesDetailsScreen(
+                                          moviesModel: homeScreenController
+                                              .moviesModel.actionMovies![idx],
+                                        ),
+                                      ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(7),
+                                          color: Colors.white,
+                                        ),
+                                        width: 111,
+                                        margin: EdgeInsets.only(right: 8),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 7, bottom: 7),
+                                              height: 136,
+                                              width: 97,
+                                              child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(8),
-                                                child: Image.network(
-                                                  slider.filmImage != null
-                                                      ? ApiClients
-                                                              .moviesPoster +
-                                                          slider.filmImage
-                                                              .toString()
-                                                      : "https://static.thenounproject.com/png/340719-200.png",
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ))
-                                    .toList(),
-                                options: CarouselOptions(
-                                    enlargeCenterPage: true,
-                                    aspectRatio: 2.3,
-                                    viewportFraction: 0.77,
-                                    enableInfiniteScroll: true,
-                                    autoPlay: true),
-                              ),
-                              SizedBox(
-                                height: 13,
-                              ),
-                              MoviesListView(
-                                title: homeScreenController.movieCategories[0],
-                                itemCount: homeScreenController
-                                    .moviesModel.actionMovies!.length,
-                                onPres: () {
-                                  Get.to(() => CategoriesViewAll(
-                                        categoryTypes: homeScreenController
-                                            .moviesModel.actionMovies,
-                                        heading: "Action movies",
-                                      ));
-                                },
-                                builder: (BuildContext context, int idx) {
-                                  return GestureDetector(
-                                    onTap: () => Get.to(
-                                      () => MoviesDetailsScreen(
-                                        moviesModel: homeScreenController
-                                            .moviesModel.actionMovies![idx],
-                                      ),
-                                    ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(7),
-                                        color: Colors.white,
-                                      ),
-                                      width: 111,
-                                      margin: EdgeInsets.only(right: 8),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: 7, bottom: 7),
-                                            height: 136,
-                                            width: 97,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Hero(
-                                                tag: homeScreenController
-                                                    .moviesModel
-                                                    .actionMovies![idx]
-                                                    .id
-                                                    .toString(),
-                                                child: Image.network(
-                                                  homeScreenController
-                                                              .moviesModel
-                                                              .actionMovies![
-                                                                  idx]
-                                                              .filmImage !=
-                                                          null
-                                                      ? ApiClients
-                                                              .moviesPoster +
-                                                          homeScreenController
-                                                              .moviesModel
-                                                              .actionMovies![
-                                                                  idx]
-                                                              .filmImage
-                                                              .toString()
-                                                      : "https://static.thenounproject.com/png/340719-200.png",
-                                                  fit: BoxFit.cover,
+                                                child: Hero(
+                                                  tag: homeScreenController
+                                                      .moviesModel
+                                                      .actionMovies![idx]
+                                                      .id
+                                                      .toString(),
+                                                  child: Image.network(
+                                                    homeScreenController
+                                                                .moviesModel
+                                                                .actionMovies![
+                                                                    idx]
+                                                                .filmImage !=
+                                                            null
+                                                        ? ApiClients
+                                                                .moviesPoster +
+                                                            homeScreenController
+                                                                .moviesModel
+                                                                .actionMovies![
+                                                                    idx]
+                                                                .filmImage
+                                                                .toString()
+                                                        : "https://static.thenounproject.com/png/340719-200.png",
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Text(
-                                            homeScreenController.moviesModel
-                                                .actionMovies![idx].filmName
-                                                .toString(),
-                                            style: TextStyle(
-                                              color: Colors.grey[600],
-                                              fontSize: 12,
-                                              letterSpacing: 0.3,
+                                            Text(
+                                              homeScreenController.moviesModel
+                                                  .actionMovies![idx].filmName
+                                                  .toString(),
+                                              style: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontSize: 12,
+                                                letterSpacing: 0.3,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              SizedBox(
-                                height: 13,
-                              ),
-                              MoviesListView(
-                                title: homeScreenController.movieCategories[1],
-                                itemCount: homeScreenController
-                                    .moviesModel.loveStories!.length,
-                                onPres: () {
-                                  Get.to(() => CategoriesViewAll(
-                                        categoryTypes: homeScreenController
-                                            .moviesModel.loveStories,
-                                        heading: "Love stories",
-                                      ));
-                                },
-                                builder: (BuildContext context, int idx) {
-                                  return GestureDetector(
-                                    onTap: () => Get.to(
-                                      () => MoviesDetailsScreen(
-                                        moviesModel: homeScreenController
-                                            .moviesModel.loveStories![idx],
+                                    );
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 13,
+                                ),
+                                MoviesListView(
+                                  title:
+                                      homeScreenController.movieCategories[1],
+                                  itemCount: homeScreenController
+                                      .moviesModel.loveStories!.length,
+                                  onPres: () {
+                                    Get.to(() => CategoriesViewAll(
+                                          categoryTypes: homeScreenController
+                                              .moviesModel.loveStories,
+                                          heading: "Love stories",
+                                        ));
+                                  },
+                                  builder: (BuildContext context, int idx) {
+                                    return GestureDetector(
+                                      onTap: () => Get.to(
+                                        () => MoviesDetailsScreen(
+                                          moviesModel: homeScreenController
+                                              .moviesModel.loveStories![idx],
+                                        ),
                                       ),
-                                    ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(7),
-                                        color: Colors.white,
-                                      ),
-                                      width: 111,
-                                      margin: EdgeInsets.only(right: 8),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: 7, bottom: 7),
-                                            height: 136,
-                                            width: 97,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Hero(
-                                                tag: homeScreenController
-                                                    .moviesModel
-                                                    .loveStories![idx]
-                                                    .id
-                                                    .toString(),
-                                                child: Image.network(
-                                                  homeScreenController
-                                                              .moviesModel
-                                                              .loveStories![idx]
-                                                              .filmImage !=
-                                                          null
-                                                      ? ApiClients
-                                                              .moviesPoster +
-                                                          homeScreenController
-                                                              .moviesModel
-                                                              .loveStories![idx]
-                                                              .filmImage
-                                                              .toString()
-                                                      : "https://static.thenounproject.com/png/340719-200.png",
-                                                  fit: BoxFit.cover,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(7),
+                                          color: Colors.white,
+                                        ),
+                                        width: 111,
+                                        margin: EdgeInsets.only(right: 8),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 7, bottom: 7),
+                                              height: 136,
+                                              width: 97,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Hero(
+                                                  tag: homeScreenController
+                                                      .moviesModel
+                                                      .loveStories![idx]
+                                                      .id
+                                                      .toString(),
+                                                  child: Image.network(
+                                                    homeScreenController
+                                                                .moviesModel
+                                                                .loveStories![
+                                                                    idx]
+                                                                .filmImage !=
+                                                            null
+                                                        ? ApiClients
+                                                                .moviesPoster +
+                                                            homeScreenController
+                                                                .moviesModel
+                                                                .loveStories![
+                                                                    idx]
+                                                                .filmImage
+                                                                .toString()
+                                                        : "https://static.thenounproject.com/png/340719-200.png",
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Text(
-                                            homeScreenController.moviesModel
-                                                .loveStories![idx].filmName
-                                                .toString(),
-                                            style: TextStyle(
-                                              color: Colors.grey[600],
-                                              fontSize: 12,
-                                              letterSpacing: 0.3,
+                                            Text(
+                                              homeScreenController.moviesModel
+                                                  .loveStories![idx].filmName
+                                                  .toString(),
+                                              style: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontSize: 12,
+                                                letterSpacing: 0.3,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              SizedBox(
-                                height: 13,
-                              ),
-                              MoviesListView(
-                                title: homeScreenController.movieCategories[2],
-                                itemCount: homeScreenController
-                                    .moviesModel.horrorMovies!.length,
-                                onPres: () {
-                                  Get.to(() => CategoriesViewAll(
-                                        categoryTypes: homeScreenController
-                                            .moviesModel.horrorMovies,
-                                        heading: "Horror movies",
-                                      ));
-                                },
-                                builder: (BuildContext context, int idx) {
-                                  return GestureDetector(
-                                    onTap: () => Get.to(
-                                      () => MoviesDetailsScreen(
-                                        moviesModel: homeScreenController
-                                            .moviesModel.horrorMovies![idx],
+                                    );
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 13,
+                                ),
+                                MoviesListView(
+                                  title:
+                                      homeScreenController.movieCategories[2],
+                                  itemCount: homeScreenController
+                                      .moviesModel.horrorMovies!.length,
+                                  onPres: () {
+                                    Get.to(() => CategoriesViewAll(
+                                          categoryTypes: homeScreenController
+                                              .moviesModel.horrorMovies,
+                                          heading: "Horror movies",
+                                        ));
+                                  },
+                                  builder: (BuildContext context, int idx) {
+                                    return GestureDetector(
+                                      onTap: () => Get.to(
+                                        () => MoviesDetailsScreen(
+                                          moviesModel: homeScreenController
+                                              .moviesModel.horrorMovies![idx],
+                                        ),
                                       ),
-                                    ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(7),
-                                        color: Colors.white,
-                                      ),
-                                      width: 111,
-                                      margin: EdgeInsets.only(right: 8),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                                top: 7, bottom: 7),
-                                            height: 136,
-                                            width: 97,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: Hero(
-                                                tag: homeScreenController
-                                                    .moviesModel
-                                                    .horrorMovies![idx]
-                                                    .id
-                                                    .toString(),
-                                                child: Image.network(
-                                                  homeScreenController
-                                                              .moviesModel
-                                                              .horrorMovies![
-                                                                  idx]
-                                                              .filmImage !=
-                                                          null
-                                                      ? ApiClients
-                                                              .moviesPoster +
-                                                          homeScreenController
-                                                              .moviesModel
-                                                              .horrorMovies![
-                                                                  idx]
-                                                              .filmImage
-                                                              .toString()
-                                                      : "https://static.thenounproject.com/png/340719-200.png",
-                                                  fit: BoxFit.cover,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(7),
+                                          color: Colors.white,
+                                        ),
+                                        width: 111,
+                                        margin: EdgeInsets.only(right: 8),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  top: 7, bottom: 7),
+                                              height: 136,
+                                              width: 97,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: Hero(
+                                                  tag: homeScreenController
+                                                      .moviesModel
+                                                      .horrorMovies![idx]
+                                                      .id
+                                                      .toString(),
+                                                  child: Image.network(
+                                                    homeScreenController
+                                                                .moviesModel
+                                                                .horrorMovies![
+                                                                    idx]
+                                                                .filmImage !=
+                                                            null
+                                                        ? ApiClients
+                                                                .moviesPoster +
+                                                            homeScreenController
+                                                                .moviesModel
+                                                                .horrorMovies![
+                                                                    idx]
+                                                                .filmImage
+                                                                .toString()
+                                                        : "https://static.thenounproject.com/png/340719-200.png",
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Text(
-                                            homeScreenController.moviesModel
-                                                .horrorMovies![idx].filmName
-                                                .toString(),
-                                            style: TextStyle(
-                                              color: Colors.grey[600],
-                                              fontSize: 12,
-                                              letterSpacing: 0.3,
+                                            Text(
+                                              homeScreenController.moviesModel
+                                                  .horrorMovies![idx].filmName
+                                                  .toString(),
+                                              style: TextStyle(
+                                                color: Colors.grey[600],
+                                                fontSize: 12,
+                                                letterSpacing: 0.3,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              SizedBox(
-                                height: 13,
-                              ),
-                            ],
+                                    );
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 13,
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
-          },
+                        );
+            },
+          ),
         ),
       ),
     );

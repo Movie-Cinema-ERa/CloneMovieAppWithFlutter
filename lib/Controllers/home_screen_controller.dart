@@ -68,9 +68,11 @@ class HomeScreenController extends GetxController {
   }
 
   getActionSearch({var query}) {
-    allMovies = (moviesModel.actionMovies! +
-        moviesModel.loveStories! +
-        moviesModel.horrorMovies!);
+    allMovies = [
+      ...moviesModel.actionMovies!,
+      ...moviesModel.loveStories!,
+      ...moviesModel.horrorMovies!
+    ];
     searchAction = allMovies.where(
       (filmname) {
         final nameLower = filmname.filmName!.toLowerCase();

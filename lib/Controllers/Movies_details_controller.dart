@@ -56,16 +56,17 @@ class MoviesDetailsController extends GetxController {
     return Chewie(controller: chewieController!);
   }
 
-  addFavourite({String? favoriteToken, String? moviesId, String? userId}) {
+  Future addFavourite(
+      {String? favoriteToken, String? moviesId, String? userId}) async {
     try {
-      ServicesApi.favoriteModel(
+      await ServicesApi.favoriteModel(
         favoriteToken: favoriteToken,
         moviesId: moviesId,
         userId: userId,
       ).then((response) {
         if (response!.status == 200) {
           favouriteModel.value = response;
-          Fluttertoast.showToast(msg: "Successfully added to Favorite");
+          Fluttertoast.showToast(msg: response.content.toString());
         } else {
           Get.showSnackbar(
             GetBar(
@@ -75,7 +76,7 @@ class MoviesDetailsController extends GetxController {
                 size: 18,
               ),
               duration: Duration(seconds: 2),
-              message: "hello !!",
+              message: "Unable to add the movies",
             ),
           );
         }

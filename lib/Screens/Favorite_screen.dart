@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_project/Controllers/favourite_list_controller.dart';
+import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
 import 'package:get/get.dart';
 
@@ -7,9 +9,13 @@ class FavoriteScreen extends StatelessWidget {
   FavoriteScreen({Key? key}) : super(key: key);
   final FavouriteListController favouriteListController =
       Get.put(FavouriteListController());
+  final LoginController loginController = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    );
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -103,12 +109,17 @@ class FavoriteScreen extends StatelessWidget {
                                     .favouriteListModel.value.content![index].id
                                     .toString(),
                                 favoriteToken: favouriteListController
-                                    .moviesDetailsController.favoriteToken,
+                                        .moviesDetailsController
+                                        .favoriteToken ??
+                                    loginController
+                                        .firebaseAuth.currentUser!.uid,
                                 userId: favouriteListController
-                                    .favouriteListModel
-                                    .value
-                                    .content![index]
-                                    .uid);
+                                        .favouriteListModel
+                                        .value
+                                        .content![index]
+                                        .uid ??
+                                    loginController
+                                        .firebaseAuth.currentUser!.uid);
                           },
                         ),
                       );

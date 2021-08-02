@@ -31,17 +31,12 @@ class MoviesDetailsScreen extends StatelessWidget {
         child: FloatingActionButton(
           backgroundColor: Colors.blue[800],
           onPressed: () {
-            if (loginController.firebaseAuth.currentUser == null) {
-              moviesDetailsController.addFavourite(
-                  favoriteToken: moviesDetailsController.favoriteToken,
-                  moviesId: moviesModel!.id.toString(),
-                  userId: moviesDetailsController.userId);
-            } else {
-              moviesDetailsController.addFavourite(
-                  favoriteToken: loginController.firebaseAuth.currentUser!.uid,
-                  moviesId: moviesModel!.id.toString(),
-                  userId: loginController.firebaseAuth.currentUser!.uid);
-            }
+            moviesDetailsController.addFavourite(
+                favoriteToken: moviesDetailsController.favoriteToken ??
+                    loginController.firebaseAuth.currentUser!.uid,
+                moviesId: moviesModel!.id.toString(),
+                userId: moviesDetailsController.userId ??
+                    loginController.firebaseAuth.currentUser!.uid);
           },
           child: Icon(
             FontAwesomeIcons.heart,
