@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'package:flutter_project/Models/All_reviews_model.dart';
+import 'package:flutter_project/Models/AvgRate_model.dart';
 import 'package:flutter_project/Models/Favourite_add_model.dart';
 import 'package:flutter_project/Models/Login_model.dart';
+import 'package:flutter_project/Models/deleteReview_model.dart';
 import 'package:flutter_project/Models/favorite_movie_list_model.dart';
 import 'package:flutter_project/Models/movies_model.dart';
 import 'package:flutter_project/Models/signUp_model.dart';
@@ -155,6 +158,118 @@ class ServicesApi {
         return response.body;
       } else {
         return null;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //Add reviews
+  static Future<dynamic> reviewAdd(
+      {String? userId,
+      String? moviesId,
+      String? token,
+      String? reviews,
+      String? ratedValue}) async {
+    try {
+      Map<String, dynamic> data = {
+        "uid": userId,
+        "pid": moviesId,
+        "otoken": token,
+        "reviews": reviews,
+        "ratedValue": ratedValue,
+      };
+      var url = Uri.parse(ApiClients.baseUrl + ApiClients.addReview);
+      var response = await http.post(
+        url,
+        body: data,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded"
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //Review List
+  static Future<ReviewListModel?> reviewList({String? moviesId}) async {
+    try {
+      Map<String, dynamic> data = {
+        "Movies_id": moviesId,
+      };
+      var url = Uri.parse(ApiClients.baseUrl + ApiClients.reviewList);
+      var response = await http.post(
+        url,
+        body: data,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded"
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return reviewListModelFromJson(response.body);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //Average ratings
+  static Future<AvgRateModel?> avgRate({String? moviesId}) async {
+    try {
+      Map<String, dynamic> data = {
+        "Movies_id": moviesId,
+      };
+      var url = Uri.parse(ApiClients.baseUrl + ApiClients.avgRate);
+      var response = await http.post(
+        url,
+        body: data,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded"
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return avgRateModelFromJson(response.body);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //Api delete Review
+  static Future<DeleteReviewModel?> reviewRemove(
+      {String? id, String? userId, String? favoriteToken}) async {
+    try {
+      Map<String, dynamic> data = {
+        "id": id,
+        "uid": userId,
+        "otoken": favoriteToken,
+      };
+      var url = Uri.parse(ApiClients.baseUrl + ApiClients.deleteReview);
+      var response = await http.post(
+        url,
+        body: data,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded"
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return deleteReviewModelFromJson(response.body);
+      } else {
+        return DeleteReviewModel();
       }
     } catch (e) {
       print(e.toString());

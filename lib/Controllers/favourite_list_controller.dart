@@ -18,9 +18,10 @@ class FavouriteListController extends GetxController {
           favoriteToken: loginController.firebaseAuth.currentUser!.uid,
           userId: loginController.firebaseAuth.currentUser!.uid);
     } else {
-      getFavoriteList(favoriteToken: 'zR}Gd6OWC"-MQ3tG%N|-', userId: "46");
+      getFavoriteList(
+          favoriteToken: moviesDetailsController.favoriteToken,
+          userId: moviesDetailsController.userId);
     }
-
     super.onInit();
   }
 

@@ -10,4 +10,8 @@ class ApiClients {
   static String favoriteAdd = "FavouriteAdd.php";
   static String favoriteList = "FavouriteList.php";
   static String favoriteRemove = "FavouriteRemove.php";
+  static String addReview = "add-reviews.php";
+  static String reviewList = "review-list.php";
+  static String avgRate = "AvgRate.php";
+  static String deleteReview = "Review_userType.php";
 }

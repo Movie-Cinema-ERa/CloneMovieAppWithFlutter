@@ -6,7 +6,9 @@ import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Models/movies_model.dart';
 import 'package:flutter_project/Widgets/movies_details_richText.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
 class MoviesDetailsScreen extends StatelessWidget {
@@ -23,6 +25,7 @@ class MoviesDetailsScreen extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.grey[100],
@@ -47,6 +50,8 @@ class MoviesDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           child: GetBuilder<MoviesDetailsController>(builder: (controller) {
+            controller.allReviews(moviesId: moviesModel!.id.toString());
+            controller.averageRates(moviesId: moviesModel!.id.toString());
             return Column(
               children: [
                 Stack(
@@ -234,7 +239,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                                                 width: 2,
                                               ),
                                               Text(
-                                                "0.0",
+                                                "${controller.averageRateModel.content?[0].ratingAvg ?? "0.0"}",
                                                 style: TextStyle(
                                                   color: Colors.grey[700],
                                                   letterSpacing: 0.3,
@@ -248,6 +253,176 @@ class MoviesDetailsScreen extends StatelessWidget {
                                     ],
                                   ),
                                   InkWell(
+                                    onTap: () {
+                                      Get.defaultDialog(
+                                        barrierDismissible: false,
+                                        radius: 8,
+                                        buttonColor: Colors.transparent,
+                                        backgroundColor: Colors.grey[100],
+                                        titleStyle: TextStyle(
+                                          color: Colors.blue[900],
+                                          fontSize: 17,
+                                          letterSpacing: 0.3,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        title: "Rate the movie",
+                                        content: Container(
+                                          child: Column(
+                                            children: [
+                                              RatingBar.builder(
+                                                initialRating: 0.0,
+                                                itemSize: 25,
+                                                direction: Axis.horizontal,
+                                                allowHalfRating: true,
+                                                itemCount: 5,
+                                                itemBuilder: (context, _) =>
+                                                    Icon(
+                                                  Icons.star,
+                                                  color: Colors.amber,
+                                                ),
+                                                onRatingUpdate: (rating) {
+                                                  controller.ratedValues =
+                                                      rating.toString();
+                                                  controller.update();
+                                                },
+                                              ),
+                                              SizedBox(
+                                                height: 12,
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 8),
+                                                child: TextFormField(
+                                                  controller:
+                                                      controller.reviewTxt,
+                                                  style: TextStyle(
+                                                      color: Colors.blue[700],
+                                                      fontSize: 15),
+                                                  keyboardType:
+                                                      TextInputType.multiline,
+                                                  cursorColor: Colors.blue,
+                                                  decoration: InputDecoration(
+                                                      labelStyle: TextStyle(
+                                                          fontSize: 15,
+                                                          color: Colors.blue),
+                                                      hintStyle: TextStyle(
+                                                          fontSize: 15,
+                                                          color: Colors.grey),
+                                                      contentPadding: EdgeInsets
+                                                          .all(18),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          9),
+                                                              borderSide: BorderSide(
+                                                                  color: Colors
+                                                                      .blue
+                                                                      .shade700,
+                                                                  width: 0.6)),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(9),
+                                                        borderSide: BorderSide(
+                                                            color: Colors
+                                                                .blue.shade800,
+                                                            width: 0.6),
+                                                      ),
+                                                      hintText:
+                                                          "Let's hear your review..."),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Container(
+                                                  height: Get.height * 0.04,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      controller
+                                                          .reviewTxt.text = "";
+                                                      controller.ratedValues =
+                                                          "";
+                                                      Get.back();
+                                                    },
+                                                    child: Text("Cancel"),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: Get.width * 0.1,
+                                              ),
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Container(
+                                                  height: Get.height * 0.04,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      if (controller.reviewTxt
+                                                                  .text ==
+                                                              "" &&
+                                                          controller
+                                                                  .ratedValues ==
+                                                              "") {
+                                                        Fluttertoast.showToast(
+                                                            msg:
+                                                                "Please provide your rating or review");
+                                                      } else {
+                                                        controller.addReviews(
+                                                            userId: controller
+                                                                    .userId ??
+                                                                loginController
+                                                                    .firebaseAuth
+                                                                    .currentUser!
+                                                                    .uid,
+                                                            moviesId:
+                                                                moviesModel!.id
+                                                                    .toString(),
+                                                            token: controller
+                                                                    .favoriteToken ??
+                                                                loginController
+                                                                    .firebaseAuth
+                                                                    .currentUser!
+                                                                    .uid,
+                                                            reviews: controller
+                                                                .reviewTxt.text,
+                                                            ratedValue: controller
+                                                                .ratedValues);
+                                                        controller.reviewTxt
+                                                            .text = "";
+                                                        controller.ratedValues =
+                                                            "";
+                                                        controller.update();
+                                                        Get.back();
+                                                      }
+                                                    },
+                                                    child: Text("Submit"),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                        ],
+                                      );
+                                    },
                                     child: Container(
                                       height: 22,
                                       width: 65,
@@ -387,6 +562,203 @@ class MoviesDetailsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      controller.isReviews == false
+                          ? Align(
+                              alignment: Alignment.center,
+                              child: Container(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      height: 67,
+                                      width: 160,
+                                      child: Opacity(
+                                        opacity: 0.3,
+                                        child: Image.asset(
+                                          "assets/images/review_icon.png",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      "No reviews yet!!",
+                                      style: TextStyle(
+                                        fontSize: 12.5,
+                                        letterSpacing: 0.4,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : Container(
+                              height: Get.height * 0.13,
+                              child: ListView.builder(
+                                padding: EdgeInsets.all(0.0),
+                                itemCount:
+                                    controller.reviewsModel.content!.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onLongPress: () {
+                                      Get.defaultDialog(
+                                        barrierDismissible: false,
+                                        titleStyle: TextStyle(
+                                          color: Colors.blue[900],
+                                          fontSize: 17,
+                                          letterSpacing: 0.3,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        radius: 8,
+                                        title: "Remove Review",
+                                        content: Text(
+                                          "Do you want to remove this review!!",
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        actions: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Container(
+                                                  height: Get.height * 0.04,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      Get.back();
+                                                    },
+                                                    child: Text("Cancel"),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: Get.width * 0.1,
+                                              ),
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                child: Container(
+                                                  height: Get.height * 0.04,
+                                                  child: ElevatedButton(
+                                                    onPressed: () {
+                                                      controller.deleteReviews(
+                                                          id: controller
+                                                              .reviewsModel
+                                                              .content![index]
+                                                              .reviewId
+                                                              .toString(),
+                                                          userId:
+                                                              controller.userId,
+                                                          token: controller
+                                                              .favoriteToken);
+                                                      Get.back();
+                                                    },
+                                                    child: Text("Ok"),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                    child: Container(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 5),
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            backgroundColor: Colors.white,
+                                            radius: 15,
+                                            child: Text(
+                                              controller.reviewsModel
+                                                  .content![index].fullName
+                                                  .toString()
+                                                  .substring(0, 1)
+                                                  .toUpperCase(),
+                                              style: TextStyle(
+                                                  color: Colors.blue[900],
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 13),
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 17,
+                                          ),
+                                          Container(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      controller
+                                                          .reviewsModel
+                                                          .content![index]
+                                                          .fullName
+                                                          .toString(),
+                                                      style: TextStyle(
+                                                        color: Colors.blue[900],
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        letterSpacing: 0.4,
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: 8,
+                                                    ),
+                                                    RatingBar.builder(
+                                                      ignoreGestures: true,
+                                                      initialRating: controller
+                                                          .reviewsModel
+                                                          .content![index]
+                                                          .ratedValue!,
+                                                      itemCount: 5,
+                                                      itemSize: 12,
+                                                      allowHalfRating: true,
+                                                      itemBuilder:
+                                                          (context, _) => Icon(
+                                                              Icons.star,
+                                                              color:
+                                                                  Colors.amber),
+                                                      onRatingUpdate: (_) {},
+                                                    ),
+                                                  ],
+                                                ),
+                                                Text(
+                                                  controller.reviewsModel
+                                                      .content![index].reviews
+                                                      .toString(),
+                                                  style:
+                                                      TextStyle(fontSize: 12),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                     ],
                   ),
                 )
