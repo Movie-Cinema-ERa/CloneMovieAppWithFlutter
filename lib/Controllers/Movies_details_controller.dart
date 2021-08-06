@@ -1,4 +1,3 @@
-import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Models/All_reviews_model.dart';
@@ -10,10 +9,8 @@ import 'package:flutter_project/helpers/SecureStorage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
 
 class MoviesDetailsController extends GetxController {
-  ChewieController? chewieController;
   bool isVisibleTrailerImages = true;
   bool isVisibleTrailerVideos = false;
   final TextEditingController reviewTxt = TextEditingController();
@@ -25,7 +22,6 @@ class MoviesDetailsController extends GetxController {
   var isReviews = false;
   var userId;
   var favoriteToken;
-
   var link;
   @override
   void onInit() {
@@ -42,27 +38,6 @@ class MoviesDetailsController extends GetxController {
     favoriteToken = await SecureStorage().readKey(key: 'FavoriteToken');
     update();
     return favoriteToken;
-  }
-
-  initializePlayer({link}) {
-    chewieController = ChewieController(
-      videoPlayerController: VideoPlayerController.network(link),
-      autoInitialize: true,
-      aspectRatio: 16 / 9,
-      autoPlay: true,
-      looping: true,
-      errorBuilder: (context, error) {
-        return Container(
-          child: Text("Sorry cant run videos"),
-        );
-      },
-    );
-  }
-
-  Chewie playTrailers({link}) {
-    initializePlayer(link: link);
-    update();
-    return Chewie(controller: chewieController!);
   }
 
   Future addFavourite(
@@ -176,7 +151,6 @@ class MoviesDetailsController extends GetxController {
       ).then((response) {
         if (response!.status == 200) {
           deleteReviewModel = response;
-          Fluttertoast.showToast(msg: "Successfully Review has been removed");
           update();
         } else {
           Fluttertoast.showToast(msg: "Unable to remove reviews!!");
@@ -186,14 +160,5 @@ class MoviesDetailsController extends GetxController {
     } catch (e) {
       print(e.toString());
     }
-  }
-
-  @override
-  void onClose() {
-    chewieController!.dispose();
-    chewieController!.videoPlayerController.dispose();
-    chewieController!.pause();
-    chewieController!.videoPlayerController.pause();
-    super.onClose();
   }
 }

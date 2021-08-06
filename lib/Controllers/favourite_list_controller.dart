@@ -13,15 +13,6 @@ class FavouriteListController extends GetxController {
   final LoginController loginController = Get.find<LoginController>();
   @override
   void onInit() {
-    if (loginController.isLogin.value) {
-      getFavoriteList(
-          favoriteToken: loginController.firebaseAuth.currentUser!.uid,
-          userId: loginController.firebaseAuth.currentUser!.uid);
-    } else {
-      getFavoriteList(
-          favoriteToken: moviesDetailsController.favoriteToken,
-          userId: moviesDetailsController.userId);
-    }
     super.onInit();
   }
 

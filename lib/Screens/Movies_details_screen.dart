@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';
 import 'package:flutter_project/Controllers/favourite_list_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
+import 'package:flutter_project/Controllers/videos_controller.dart';
 import 'package:flutter_project/Models/movies_model.dart';
 import 'package:flutter_project/Widgets/movies_details_richText.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
@@ -19,6 +20,7 @@ class MoviesDetailsScreen extends StatelessWidget {
   final LoginController loginController = Get.put(LoginController());
   final FavouriteListController favouriteListController =
       Get.put(FavouriteListController());
+  final VideosController videosController = Get.put(VideosController());
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,7 @@ class MoviesDetailsScreen extends StatelessWidget {
           child: GetBuilder<MoviesDetailsController>(builder: (controller) {
             controller.allReviews(moviesId: moviesModel!.id.toString());
             controller.averageRates(moviesId: moviesModel!.id.toString());
+
             return Column(
               children: [
                 Stack(
@@ -63,10 +66,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                               color: Colors.black,
                               height: Get.height * 0.32,
                               child: Container(
-                                child: controller.playTrailers(
-                                  link: ApiClients.trailerVedios +
-                                      moviesModel!.trailerVideos.toString(),
-                                ),
+                                child: videosController.playTrailers(),
                               ),
                             )
                           : Visibility(
@@ -137,6 +137,10 @@ class MoviesDetailsScreen extends StatelessWidget {
                                   ),
                                 ),
                                 onPressed: () {
+                                  videosController.initializePlayer(
+                                      link: ApiClients.trailerVedios +
+                                          moviesModel!.trailerVideos
+                                              .toString());
                                   controller.isVisibleTrailerImages =
                                       !controller.isVisibleTrailerImages;
                                   controller.isVisibleTrailerVideos =
@@ -572,7 +576,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Container(
-                                      height: 67,
+                                      height: 120,
                                       width: 160,
                                       child: Opacity(
                                         opacity: 0.3,
@@ -582,13 +586,22 @@ class MoviesDetailsScreen extends StatelessWidget {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
                                     Text(
                                       "No reviews yet!!",
                                       style: TextStyle(
-                                        fontSize: 12.5,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 0.4,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                    Text(
+                                      "Be the first one to give reviews!!",
+                                      style: TextStyle(
+                                        fontSize: 12,
                                         letterSpacing: 0.4,
                                         color: Colors.grey[600],
                                       ),
@@ -609,6 +622,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                                 itemBuilder: (BuildContext context, int index) {
                                   return GestureDetector(
                                     onLongPress: () {
+                                      HapticFeedback.vibrate();
                                       Get.defaultDialog(
                                         barrierDismissible: false,
                                         titleStyle: TextStyle(
