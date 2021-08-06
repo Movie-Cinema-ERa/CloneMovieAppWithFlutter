@@ -66,7 +66,10 @@ class MoviesDetailsScreen extends StatelessWidget {
                               color: Colors.black,
                               height: Get.height * 0.32,
                               child: Container(
-                                child: videosController.playTrailers(),
+                                child: controller.playTrailers(
+                                  link: ApiClients.trailerVedios +
+                                      moviesModel!.trailerVideos.toString(),
+                                ),
                               ),
                             )
                           : Visibility(
@@ -137,10 +140,6 @@ class MoviesDetailsScreen extends StatelessWidget {
                                   ),
                                 ),
                                 onPressed: () {
-                                  videosController.initializePlayer(
-                                      link: ApiClients.trailerVedios +
-                                          moviesModel!.trailerVideos
-                                              .toString());
                                   controller.isVisibleTrailerImages =
                                       !controller.isVisibleTrailerImages;
                                   controller.isVisibleTrailerVideos =

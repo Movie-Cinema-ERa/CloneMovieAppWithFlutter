@@ -26,7 +26,8 @@ class VideosController extends GetxController {
     update();
   }
 
-  Chewie playTrailers() {
+  Chewie playTrailers({link}) {
+    initializePlayer(link: link);
     update();
     return Chewie(controller: chewieController!);
   }
@@ -35,8 +36,8 @@ class VideosController extends GetxController {
   void onClose() {
     chewieController!.dispose();
     chewieController!.videoPlayerController.dispose();
-    chewieController!.pause();
-    chewieController!.videoPlayerController.pause();
+    // chewieController!.pause();
+    // chewieController!.videoPlayerController.pause();
     super.onClose();
   }
 }
