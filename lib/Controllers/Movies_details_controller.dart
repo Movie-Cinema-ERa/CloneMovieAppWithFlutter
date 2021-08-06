@@ -10,7 +10,6 @@ import 'package:flutter_project/helpers/SecureStorage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
 
 class MoviesDetailsController extends GetxController {
   ChewieController? chewieController;
@@ -25,7 +24,6 @@ class MoviesDetailsController extends GetxController {
   var isReviews = false;
   var userId;
   var favoriteToken;
-  var link;
   @override
   void onInit() {
     super.onInit();
@@ -41,28 +39,6 @@ class MoviesDetailsController extends GetxController {
     favoriteToken = await SecureStorage().readKey(key: 'FavoriteToken');
     update();
     return favoriteToken;
-  }
-
-  initializePlayer({link}) {
-    chewieController = ChewieController(
-      videoPlayerController: VideoPlayerController.network(link),
-      autoInitialize: true,
-      aspectRatio: 16 / 9,
-      autoPlay: true,
-      looping: true,
-      errorBuilder: (context, error) {
-        return Container(
-          child: Text("Sorry cant run videos"),
-        );
-      },
-    );
-    update();
-  }
-
-  Chewie playTrailers({link}) {
-    initializePlayer(link: link);
-    update();
-    return Chewie(controller: chewieController!);
   }
 
   Future addFavourite(
