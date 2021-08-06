@@ -607,7 +607,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 3,
+                                        height: 5,
                                       ),
                                       Text(
                                         "Be the first one to give reviews!!",

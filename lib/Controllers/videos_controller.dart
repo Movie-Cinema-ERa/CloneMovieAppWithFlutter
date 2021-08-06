@@ -29,25 +29,23 @@ class VideosController extends GetxController {
         );
       },
     );
-    update();
   }
 
   Chewie playTrailers() {
-    // initializePlayer(link: link);
-    // update();
-    update();
     return Chewie(controller: chewieController!);
   }
 
   Future<bool> exitPage() async {
-    if (chewieController!.videoPlayerController.value.isInitialized &&
+    if (chewieController != null &&
         chewieController!.videoPlayerController.value.isPlaying) {
       moviesDetailsController.isVisibleTrailerImages = true;
       moviesDetailsController.isVisibleTrailerVideos = false;
+      moviesDetailsController.update();
       onClose();
     } else {
       moviesDetailsController.isVisibleTrailerImages = true;
       moviesDetailsController.isVisibleTrailerVideos = false;
+      moviesDetailsController.update();
       chewieController!.dispose();
       chewieController!.videoPlayerController.dispose();
       onClose();
@@ -58,8 +56,6 @@ class VideosController extends GetxController {
 
   @override
   void onClose() {
-    // chewieController!.dispose();
-    // chewieController!.videoPlayerController.dispose();
     chewieController!.pause();
     chewieController!.videoPlayerController.pause();
     super.onClose();
