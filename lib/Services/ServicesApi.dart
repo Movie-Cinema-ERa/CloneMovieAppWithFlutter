@@ -1,10 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_project/Models/All_reviews_model.dart';
 import 'package:flutter_project/Models/AvgRate_model.dart';
 import 'package:flutter_project/Models/Favourite_add_model.dart';
 import 'package:flutter_project/Models/Login_model.dart';
 import 'package:flutter_project/Models/deleteReview_model.dart';
 import 'package:flutter_project/Models/favorite_movie_list_model.dart';
+import 'package:flutter_project/Models/khalti_check_payment_model.dart';
 import 'package:flutter_project/Models/movies_model.dart';
 import 'package:flutter_project/Models/signUp_model.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
@@ -270,6 +273,94 @@ class ServicesApi {
         return deleteReviewModelFromJson(response.body);
       } else {
         return DeleteReviewModel();
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //Api check Movies khalti Payment
+  static Future<KhaltiCheckModel?> checkPayment(
+      {String? moviesId, String? userId, String? favoriteToken}) async {
+    try {
+      Map<String, dynamic> data = {
+        "uid": userId,
+        "pid": moviesId,
+        "otoken": favoriteToken,
+      };
+      var url = Uri.parse(ApiClients.baseUrl + ApiClients.checkoutKhaltiPay);
+      var response = await http.post(
+        url,
+        body: data,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded"
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return khaltiCheckModelFromJson(response.body);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //Api check Movies khalti Payment
+  static Future<dynamic> khaltiVerification(
+      {String? khaltiToken, double? amount}) async {
+    var testSecretKey = dotenv.env['Test_Secret_key'];
+
+    try {
+      Map<dynamic, dynamic> payload = {"token": khaltiToken, "amount": amount};
+
+      var url = Uri.parse(ApiClients.verifyKhalti);
+      var response = await http.post(
+        url,
+        body: json.encode(payload),
+        headers: {
+          'Content-type': 'application/json',
+          "Authorization": testSecretKey.toString()
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  //Api add khalti transaction to database
+  static Future<dynamic> addKhaltiTransaction(
+      {String? userId,
+      String? moviesId,
+      String? favoriteToken,
+      String? khaltiTransaction}) async {
+    try {
+      Map<String, dynamic> data = {
+        "uid": userId,
+        "pid": moviesId,
+        "otoken": favoriteToken,
+        "transaction": khaltiTransaction,
+      };
+      var url = Uri.parse(ApiClients.baseUrl + ApiClients.addPaymentToDatabase);
+      var response = await http.post(
+        url,
+        body: data,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded"
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        return null;
       }
     } catch (e) {
       print(e.toString());

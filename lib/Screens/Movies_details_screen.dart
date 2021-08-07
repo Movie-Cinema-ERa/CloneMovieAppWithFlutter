@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_project/Controllers/Khalti_payment_controller.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';
 import 'package:flutter_project/Controllers/favourite_list_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
@@ -21,6 +22,8 @@ class MoviesDetailsScreen extends StatelessWidget {
   final FavouriteListController favouriteListController =
       Get.put(FavouriteListController());
   final VideosController videosController = Get.put(VideosController());
+  final KhaltiPaymentControllers khaltiPaymentControllers =
+      Get.put(KhaltiPaymentControllers());
 
   @override
   Widget build(BuildContext context) {
@@ -187,13 +190,72 @@ class MoviesDetailsScreen extends StatelessWidget {
                             children: [
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
-                                child: Hero(
-                                  tag: moviesModel!.id.toString(),
-                                  child: Image.network(
-                                    ApiClients.moviesPoster +
-                                        moviesModel!.filmImage.toString(),
+                                child: Stack(children: [
+                                  Hero(
+                                    tag: moviesModel!.id.toString(),
+                                    child: Image.network(
+                                      ApiClients.moviesPoster +
+                                          moviesModel!.filmImage.toString(),
+                                    ),
                                   ),
-                                ),
+                                  Positioned(
+                                    top: 40,
+                                    left: 6,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        var moviesPrice =
+                                            double.parse(moviesModel!.price!) *
+                                                100;
+                                        khaltiPaymentControllers.khaltiCheck(
+                                            moviesId:
+                                                moviesModel!.id.toString(),
+                                            userId:
+                                                moviesDetailsController.userId,
+                                            favoriteToken:
+                                                moviesDetailsController
+                                                    .favoriteToken,
+                                            price: moviesPrice,
+                                            moviesName: moviesModel!.filmName,
+                                            moviesImage: moviesModel!.filmImage,
+                                            fullMovies:
+                                                moviesModel!.trailerVideos);
+                                      },
+                                      child: Container(
+                                        height: 22,
+                                        width: 55,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            color:
+                                                Colors.black.withOpacity(0.6),
+                                            border: Border.all(
+                                                color: Colors.grey.shade100,
+                                                width: 0.16)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.play_arrow,
+                                              color: Colors.grey[300],
+                                              size: 14,
+                                            ),
+                                            SizedBox(
+                                              width: 3,
+                                            ),
+                                            Text(
+                                              "Watch",
+                                              style: TextStyle(
+                                                  letterSpacing: 0.2,
+                                                  fontSize: 11,
+                                                  color: Colors.grey[300]),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ]),
                               ),
                               Container(
                                 margin: EdgeInsets.only(left: 12),

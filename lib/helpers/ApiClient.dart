@@ -14,4 +14,7 @@ class ApiClients {
   static String reviewList = "review-list.php";
   static String avgRate = "AvgRate.php";
   static String deleteReview = "Review_userType.php";
+  static String checkoutKhaltiPay = "Khalti_status.php";
+  static String verifyKhalti = "https://khalti.com/api/v2/payment/verify/";
+  static String addPaymentToDatabase = "add-Khalti.php";
 }

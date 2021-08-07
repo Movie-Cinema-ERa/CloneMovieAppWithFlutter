@@ -54,6 +54,19 @@ class VideosController extends GetxController {
     return Future.value(true);
   }
 
+  Future<bool> exitPageFullMovies() async {
+    if (chewieController != null &&
+        chewieController!.videoPlayerController.value.isPlaying) {
+      onClose();
+    } else {
+      chewieController!.dispose();
+      chewieController!.videoPlayerController.dispose();
+      onClose();
+    }
+    update();
+    return Future.value(true);
+  }
+
   @override
   void onClose() {
     chewieController!.pause();
