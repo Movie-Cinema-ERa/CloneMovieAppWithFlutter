@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';
 import 'package:flutter_project/Controllers/favourite_list_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
+import 'package:flutter_project/Screens/Movies_details_screen.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
 import 'package:get/get.dart';
 
@@ -76,6 +77,10 @@ class FavoriteScreen extends StatelessWidget {
                           .favouriteListModel.value.content!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
+                          onTap: () => Get.to(() => MoviesDetailsScreen(
+                                favouriteModel: favouriteListController
+                                    .favouriteListModel.value.content![index],
+                              )),
                           visualDensity:
                               VisualDensity(horizontal: -4, vertical: 0),
                           dense: true,

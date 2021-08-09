@@ -9,6 +9,7 @@ import 'package:flutter_project/Models/deleteReview_model.dart';
 import 'package:flutter_project/Models/favorite_movie_list_model.dart';
 import 'package:flutter_project/Models/khalti_check_payment_model.dart';
 import 'package:flutter_project/Models/movies_model.dart';
+import 'package:flutter_project/Models/purchased_movies_model.dart';
 import 'package:flutter_project/Models/signUp_model.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
 import 'package:http/http.dart' as http;
@@ -359,6 +360,35 @@ class ServicesApi {
 
       if (response.statusCode == 200) {
         return response.body;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+//Api purchased movies
+  static Future<PurchasedMoviesModel?> purchasedMoviesApi({
+    String? favoriteToken,
+    String? userId,
+  }) async {
+    try {
+      Map<String, dynamic> data = {
+        "uid": userId,
+        "otoken": favoriteToken,
+      };
+      var url = Uri.parse(ApiClients.baseUrl + ApiClients.moviesPurchased);
+      var response = await http.post(
+        url,
+        body: data,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/x-www-form-urlencoded"
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return purchasedMoviesModelFromJson(response.body);
       } else {
         return null;
       }

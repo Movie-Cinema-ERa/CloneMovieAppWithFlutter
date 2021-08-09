@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Screens/Favorite_screen.dart';
 import 'package:flutter_project/Screens/Home_screen.dart';
+import 'package:flutter_project/Screens/purchased_Movies.dart';
 import 'package:get/get.dart';
 
 class ButtonNavBarController extends GetxController {
@@ -9,7 +10,7 @@ class ButtonNavBarController extends GetxController {
   List<Widget> pages = [
     HomeScreen(),
     FavoriteScreen(),
-    HomeScreen(),
+    PurchasedMovies(),
   ];
 
   List<BottomNavigationBarItem> items = [
@@ -18,6 +19,8 @@ class ButtonNavBarController extends GetxController {
     BottomNavigationBarItem(
         icon: Icon(Icons.favorite), label: "Favorite", tooltip: "Favorite"),
     BottomNavigationBarItem(
-        icon: Icon(Icons.person), label: "Profile", tooltip: "Profile"),
+        icon: Icon(Icons.movie_filter),
+        label: "My movies",
+        tooltip: "My movies"),
   ];
 }

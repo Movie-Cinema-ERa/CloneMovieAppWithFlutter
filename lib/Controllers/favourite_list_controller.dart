@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Models/favorite_movie_list_model.dart';
 import 'package:flutter_project/Services/ServicesApi.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class FavouriteListController extends GetxController {
@@ -54,7 +56,17 @@ class FavouriteListController extends GetxController {
                     loginController.firebaseAuth.currentUser!.uid,
                 userId: moviesDetailsController.userId ??
                     loginController.firebaseAuth.currentUser!.uid);
-            Fluttertoast.showToast(msg: "Successfully removed from Favorite");
+            Get.showSnackbar(
+              GetBar(
+                icon: Icon(
+                  FontAwesomeIcons.exclamationCircle,
+                  color: Colors.grey[100],
+                  size: 18,
+                ),
+                duration: Duration(seconds: 2),
+                message: "Movie removed from Favourite List",
+              ),
+            );
           } else {
             return null;
           }

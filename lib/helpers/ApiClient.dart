@@ -17,4 +17,5 @@ class ApiClients {
   static String checkoutKhaltiPay = "Khalti_status.php";
   static String verifyKhalti = "https://khalti.com/api/v2/payment/verify/";
   static String addPaymentToDatabase = "add-Khalti.php";
+  static String moviesPurchased = "transacted_movies_list.php";
 }
