@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_project/Controllers/SignUp_controller.dart';
@@ -14,6 +15,7 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController emailTXT = TextEditingController();
   final TextEditingController passwordTXT = TextEditingController();
   final TextEditingController confirmPasswordTXT = TextEditingController();
+  final tapGestureRecognizer = TapGestureRecognizer()..onTap = () {};
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,7 @@ class SignUpScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.06,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 32, right: 32),
+                    padding: const EdgeInsets.only(left: 38, right: 38),
                     child: Container(
                       child: Column(
                         children: [
@@ -110,26 +112,28 @@ class SignUpScreen extends StatelessWidget {
                               preIcon: Icons.lock,
                               txtType: TextInputType.text,
                               obscureText: true),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "By sigining up you agree to the",
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 12.2,
+                          SizedBox(
+                            height: 10,
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              text: "By sigining up you agree to the",
+                              style:
+                                  TextStyle(color: Colors.blue, fontSize: 10.2),
+                              children: [
+                                TextSpan(
+                                  recognizer: tapGestureRecognizer,
+                                  text: " Terms & Conditions",
+                                  style: TextStyle(
+                                      color: Colors.blue[800],
+                                      fontSize: 10.2,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                              TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    " Terms & Conditions",
-                                    style: TextStyle(
-                                        color: Colors.blue[800],
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.bold),
-                                  ))
-                            ],
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
                           ),
                           CustomButton(
                               label: "Sign up",

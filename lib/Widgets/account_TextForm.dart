@@ -21,7 +21,7 @@ class CustomTextForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Get.height * 0.06,
+      height: Get.height * 0.058,
       child: TextFormField(
         controller: editTxtControl,
         style: TextStyle(color: Colors.blue[700], fontSize: 15),

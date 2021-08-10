@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_project/BottomNavBar/ButtomNavBar.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';

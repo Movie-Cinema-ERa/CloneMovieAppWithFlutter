@@ -58,7 +58,7 @@ class LoginScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 32, right: 32),
+                    padding: const EdgeInsets.only(left: 38, right: 38),
                     child: Container(
                       child: Column(
                         children: [
@@ -175,7 +175,7 @@ class LoginScreen extends StatelessWidget {
                             height: 10,
                           ),
                           Container(
-                            width: Get.width * 0.59,
+                            width: Get.width * 0.7,
                             child: ElevatedButton.icon(
                               onPressed: () {
                                 loginController.googleLogin();
@@ -194,6 +194,8 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                               style: TextButton.styleFrom(
+                                visualDensity:
+                                    VisualDensity(horizontal: 4, vertical: 1),
                                 backgroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),

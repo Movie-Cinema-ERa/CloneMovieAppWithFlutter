@@ -19,6 +19,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: TextButton.styleFrom(
+            visualDensity: VisualDensity(horizontal: -1.5),
             backgroundColor: colors,
             side: borderOutline,
             shape:

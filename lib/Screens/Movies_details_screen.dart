@@ -10,7 +10,6 @@ import 'package:flutter_project/Models/movies_model.dart';
 import 'package:flutter_project/Models/purchased_movies_model.dart';
 import 'package:flutter_project/Widgets/movies_details_richText.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';

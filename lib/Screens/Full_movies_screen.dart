@@ -41,25 +41,11 @@ class FullMovies extends StatelessWidget {
             builder: (controller) {
               return Center(
                 child: Container(
-                  color: Colors.black,
-                  height: Get.height * 0.32,
-                  child: videosController.chewieController != null &&
-                          videosController.chewieController!
-                              .videoPlayerController.value.isPlaying
-                      ? Container(
-                          child: controller.playTrailers(),
-                        )
-                      : Center(
-                          child: Container(
-                            height: 26,
-                            width: 26,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2.4,
-                              backgroundColor: Colors.grey[300],
-                            ),
-                          ),
-                        ),
-                ),
+                    color: Colors.black,
+                    height: Get.height * 0.32,
+                    child: Container(
+                      child: controller.playTrailers(),
+                    )),
               );
             },
           )),
