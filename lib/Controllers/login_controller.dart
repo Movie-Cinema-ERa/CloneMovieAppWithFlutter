@@ -83,7 +83,7 @@ class LoginController extends GetxController {
     SecureStorage().deleteKey(key: 'name');
     SecureStorage().deleteKey(key: 'UserId');
     SecureStorage().deleteKey(key: 'FavoriteToken');
-    Get.off(LoginScreen());
+    Get.offAll(LoginScreen());
   }
 
   Future googleHanldeLogin(isLogin) async {

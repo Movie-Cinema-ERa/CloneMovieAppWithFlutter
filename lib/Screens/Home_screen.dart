@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_project/Controllers/Movies_details_controller.dart';
 import 'package:flutter_project/Controllers/home_screen_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Screens/Movies_details_screen.dart';
@@ -18,6 +19,8 @@ class HomeScreen extends StatelessWidget {
   final SecureStorage secureStorage = SecureStorage();
   final HomeScreenController homeScreenController =
       Get.put(HomeScreenController());
+  final MoviesDetailsController moviesDetailsController =
+      Get.put(MoviesDetailsController());
 
   @override
   Widget build(BuildContext context) {

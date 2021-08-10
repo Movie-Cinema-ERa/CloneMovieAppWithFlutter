@@ -86,11 +86,16 @@ class FavoriteScreen extends StatelessWidget {
                           dense: true,
                           leading: ClipRRect(
                             borderRadius: BorderRadius.circular(6),
-                            child: Image.network(
-                              ApiClients.moviesPoster +
-                                  favouriteListController.favouriteListModel
-                                      .value.content![index].aPoster
-                                      .toString(),
+                            child: Hero(
+                              tag: favouriteListController.favouriteListModel
+                                  .value.content![index].moviesId
+                                  .toString(),
+                              child: Image.network(
+                                ApiClients.moviesPoster +
+                                    favouriteListController.favouriteListModel
+                                        .value.content![index].aPoster
+                                        .toString(),
+                              ),
                             ),
                           ),
                           title: Text(

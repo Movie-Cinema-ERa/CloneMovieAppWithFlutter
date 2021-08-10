@@ -17,13 +17,13 @@ class PurchasedMoviesModel {
   });
 
   int? status;
-  List<Content>? content;
+  List<Contents>? content;
 
   factory PurchasedMoviesModel.fromJson(Map<String, dynamic> json) =>
       PurchasedMoviesModel(
         status: json["status"],
-        content:
-            List<Content>.from(json["content"].map((x) => Content.fromJson(x))),
+        content: List<Contents>.from(
+            json["content"].map((x) => Contents.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -32,8 +32,8 @@ class PurchasedMoviesModel {
       };
 }
 
-class Content {
-  Content({
+class Contents {
+  Contents({
     this.id,
     this.uid,
     this.token,
@@ -67,7 +67,7 @@ class Content {
   String? language;
   String? overview;
 
-  factory Content.fromJson(Map<String, dynamic> json) => Content(
+  factory Contents.fromJson(Map<String, dynamic> json) => Contents(
         id: json["id"],
         uid: json["uid"],
         token: json["token"],

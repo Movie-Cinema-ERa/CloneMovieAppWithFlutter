@@ -135,7 +135,7 @@ class MoviesDetailsController extends GetxController {
           averageRateModel = response;
           update();
         } else {
-          update();
+          print("error");
         }
       });
     } catch (e) {

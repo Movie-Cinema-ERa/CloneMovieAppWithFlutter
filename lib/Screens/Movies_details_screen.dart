@@ -7,6 +7,7 @@ import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Controllers/videos_controller.dart';
 import 'package:flutter_project/Models/favorite_movie_list_model.dart';
 import 'package:flutter_project/Models/movies_model.dart';
+import 'package:flutter_project/Models/purchased_movies_model.dart';
 import 'package:flutter_project/Widgets/movies_details_richText.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,12 +16,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
 class MoviesDetailsScreen extends StatelessWidget {
-  MoviesDetailsScreen({Key? key, this.moviesModel, this.favouriteModel})
+  MoviesDetailsScreen(
+      {Key? key, this.moviesModel, this.favouriteModel, this.purchasedModel})
       : super(key: key);
   final ActionMovie? moviesModel;
   final Content? favouriteModel;
+  final Contents? purchasedModel;
   final MoviesDetailsController moviesDetailsController =
-      Get.put(MoviesDetailsController());
+      Get.find<MoviesDetailsController>();
   final LoginController loginController = Get.find<LoginController>();
   final FavouriteListController favouriteListController =
       Get.put(FavouriteListController());
@@ -47,7 +50,8 @@ class MoviesDetailsScreen extends StatelessWidget {
               moviesDetailsController.addFavourite(
                   favoriteToken: moviesDetailsController.favoriteToken ??
                       loginController.firebaseAuth.currentUser!.uid,
-                  moviesId: "${moviesModel?.id ?? favouriteModel!.moviesId}",
+                  moviesId:
+                      "${moviesModel?.id ?? favouriteModel?.moviesId ?? purchasedModel!.moviesId}",
                   userId: moviesDetailsController.userId ??
                       loginController.firebaseAuth.currentUser!.uid);
             },
@@ -61,9 +65,11 @@ class MoviesDetailsScreen extends StatelessWidget {
           child: Container(
             child: GetBuilder<MoviesDetailsController>(builder: (controller) {
               controller.allReviews(
-                  moviesId: "${moviesModel?.id ?? favouriteModel!.moviesId}");
+                  moviesId:
+                      "${moviesModel?.id ?? favouriteModel?.moviesId ?? purchasedModel!.moviesId}");
               controller.averageRates(
-                  moviesId: "${moviesModel?.id ?? favouriteModel!.moviesId}");
+                  moviesId:
+                      "${moviesModel?.id ?? favouriteModel?.moviesId ?? purchasedModel!.moviesId}");
 
               return Column(
                 children: [
@@ -75,9 +81,26 @@ class MoviesDetailsScreen extends StatelessWidget {
                             ? Container(
                                 color: Colors.black,
                                 height: Get.height * 0.32,
-                                child: Container(
-                                  child: videosController.playTrailers(),
-                                ),
+                                child: videosController.chewieController !=
+                                            null &&
+                                        videosController
+                                            .chewieController!
+                                            .videoPlayerController
+                                            .value
+                                            .isPlaying
+                                    ? Container(
+                                        child: videosController.playTrailers(),
+                                      )
+                                    : Center(
+                                        child: Container(
+                                          height: 26,
+                                          width: 26,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2.4,
+                                            backgroundColor: Colors.grey[300],
+                                          ),
+                                        ),
+                                      ),
                               )
                             : Visibility(
                                 visible: controller.isVisibleTrailerVideos,
@@ -93,7 +116,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                               width: Get.width,
                               child: Image.network(
                                 ApiClients.moviesPoster +
-                                    "${moviesModel?.filmImage! ?? favouriteModel?.aPoster}",
+                                    "${moviesModel?.filmImage! ?? favouriteModel?.aPoster ?? purchasedModel!.aPoster}",
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -150,7 +173,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                                   onPressed: () {
                                     videosController.initializePlayer(
                                       link: ApiClients.trailerVedios +
-                                          "${moviesModel?.trailerVideos ?? favouriteModel!.trailerVideos}",
+                                          "${moviesModel?.trailerVideos ?? favouriteModel?.trailerVideos ?? purchasedModel!.trailerVideos}",
                                     );
                                     controller.isVisibleTrailerImages =
                                         !controller.isVisibleTrailerImages;
@@ -198,10 +221,10 @@ class MoviesDetailsScreen extends StatelessWidget {
                                 child: Stack(children: [
                                   Hero(
                                     tag:
-                                        "${moviesModel?.id ?? favouriteModel!.id}",
+                                        "${moviesModel?.id ?? favouriteModel?.moviesId ?? purchasedModel!.moviesId}",
                                     child: Image.network(
                                       ApiClients.moviesPoster +
-                                          "${moviesModel?.filmImage ?? favouriteModel!.aPoster}",
+                                          "${moviesModel?.filmImage ?? favouriteModel?.aPoster ?? purchasedModel!.aPoster}",
                                     ),
                                   ),
                                   Positioned(
@@ -210,11 +233,11 @@ class MoviesDetailsScreen extends StatelessWidget {
                                     child: GestureDetector(
                                       onTap: () {
                                         var moviesPrice = double.parse(
-                                                "${moviesModel?.price ?? favouriteModel!.price}") *
+                                                "${moviesModel?.price ?? favouriteModel?.price ?? purchasedModel!.price}") *
                                             100;
                                         khaltiPaymentControllers.khaltiCheck(
                                             moviesId:
-                                                "${moviesModel?.id ?? favouriteModel!.moviesId}",
+                                                "${moviesModel?.id ?? favouriteModel?.moviesId ?? purchasedModel!.moviesId}",
                                             userId: moviesDetailsController
                                                     .userId ??
                                                 loginController.firebaseAuth
@@ -226,11 +249,11 @@ class MoviesDetailsScreen extends StatelessWidget {
                                                         .currentUser!.uid,
                                             price: moviesPrice,
                                             moviesName:
-                                                "${moviesModel?.filmName ?? favouriteModel!.aName}",
+                                                "${moviesModel?.filmName ?? favouriteModel?.aName ?? purchasedModel!.aName}",
                                             moviesImage:
-                                                "${moviesModel?.filmImage ?? favouriteModel!.aPoster}",
+                                                "${moviesModel?.filmImage ?? favouriteModel?.aPoster ?? purchasedModel!.aPoster}",
                                             fullMovies:
-                                                "${moviesModel?.trailerVideos ?? favouriteModel!.trailerVideos}");
+                                                "${moviesModel?.trailerVideos ?? favouriteModel?.trailerVideos ?? purchasedModel!.trailerVideos}");
                                       },
                                       child: Container(
                                         height: 22,
@@ -281,7 +304,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${moviesModel?.filmName ?? favouriteModel!.aName}",
+                                          "${moviesModel?.filmName ?? favouriteModel?.aName ?? purchasedModel!.aName}",
                                           style: TextStyle(
                                             color: Colors.blue[900],
                                             letterSpacing: 0.3,
@@ -293,7 +316,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                                           children: [
                                             Text(
                                               "Price : Rs." +
-                                                  "${moviesModel?.price ?? favouriteModel!.price}",
+                                                  "${moviesModel?.price ?? favouriteModel?.price ?? purchasedModel!.price}",
                                               style: TextStyle(
                                                 color: Colors.grey[700],
                                                 letterSpacing: 0.3,
@@ -464,9 +487,23 @@ class MoviesDetailsScreen extends StatelessWidget {
                                                             controller
                                                                     .ratedValues ==
                                                                 "") {
-                                                          Fluttertoast.showToast(
-                                                              msg:
-                                                                  "Please provide your rating or review");
+                                                          Get.showSnackbar(
+                                                            GetBar(
+                                                                icon: Icon(
+                                                                  FontAwesomeIcons
+                                                                      .exclamationCircle,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      100],
+                                                                  size: 18,
+                                                                ),
+                                                                duration:
+                                                                    Duration(
+                                                                        seconds:
+                                                                            2),
+                                                                message:
+                                                                    "Please provide your rating or review"),
+                                                          );
                                                         } else {
                                                           controller.addReviews(
                                                               userId: controller
@@ -476,7 +513,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                                                                       .currentUser!
                                                                       .uid,
                                                               moviesId:
-                                                                  "${moviesModel?.id ?? favouriteModel!.moviesId}",
+                                                                  "${moviesModel?.id ?? favouriteModel?.moviesId ?? purchasedModel!.moviesId}",
                                                               token: controller
                                                                       .favoriteToken ??
                                                                   loginController
@@ -580,7 +617,8 @@ class MoviesDetailsScreen extends StatelessWidget {
                         ),
                         RichTextMovieDetails(
                           header: "Cast : ",
-                          body: "${moviesModel?.cast ?? favouriteModel!.cast}",
+                          body:
+                              "${moviesModel?.cast ?? favouriteModel?.cast ?? purchasedModel!.cast}",
                         ),
                         SizedBox(
                           height: 1,
@@ -588,18 +626,18 @@ class MoviesDetailsScreen extends StatelessWidget {
                         RichTextMovieDetails(
                           header: "Director : ",
                           body:
-                              "${moviesModel?.director ?? favouriteModel!.director}",
+                              "${moviesModel?.director ?? favouriteModel?.director ?? purchasedModel!.director}",
                         ),
                         SizedBox(
                           height: 1,
                         ),
                         RichTextMovieDetails(
                           header: "Release Date : ",
-                          body: "${moviesModel?.releaseDate!.year ?? favouriteModel!.releaseDate!.year}" +
+                          body: "${moviesModel?.releaseDate!.year ?? favouriteModel?.releaseDate!.year ?? purchasedModel!.releaseDate!.year}" +
                               "-" +
-                              "${moviesModel?.releaseDate!.month ?? favouriteModel!.releaseDate!.month}" +
+                              "${moviesModel?.releaseDate!.month ?? favouriteModel?.releaseDate!.month ?? purchasedModel!.releaseDate!.month}" +
                               "-" +
-                              "${moviesModel?.releaseDate!.day ?? favouriteModel!.releaseDate!.day}",
+                              "${moviesModel?.releaseDate!.day ?? favouriteModel?.releaseDate!.day ?? purchasedModel!.releaseDate!.day}",
                         ),
                         SizedBox(
                           height: 1,
@@ -607,7 +645,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                         RichTextMovieDetails(
                           header: "Run time : ",
                           body:
-                              "${moviesModel?.runTime ?? favouriteModel!.runTime}",
+                              "${moviesModel?.runTime ?? favouriteModel?.runTime ?? purchasedModel!.runTime}",
                         ),
                         SizedBox(
                           height: 1,
@@ -615,7 +653,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                         RichTextMovieDetails(
                             header: "Language : ",
                             body:
-                                "${moviesModel?.language.toString().substring(9).capitalize ?? favouriteModel!.language}"
+                                "${moviesModel?.language.toString().substring(9).capitalize ?? favouriteModel?.language ?? purchasedModel!.language}"
                                     .toString()),
                         SizedBox(
                           height: 1,
@@ -623,7 +661,7 @@ class MoviesDetailsScreen extends StatelessWidget {
                         RichTextMovieDetails(
                           header: "Overview : ",
                           body:
-                              "${moviesModel?.overview ?? favouriteModel!.overview}",
+                              "${moviesModel?.overview ?? favouriteModel?.overview ?? purchasedModel!.overview}",
                         ),
                         SizedBox(
                           height: 2,

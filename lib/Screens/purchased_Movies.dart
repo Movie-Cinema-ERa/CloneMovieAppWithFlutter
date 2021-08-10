@@ -85,7 +85,9 @@ class PurchasedMovies extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () => Get.to(
-                          () => MoviesDetailsScreen(),
+                          () => MoviesDetailsScreen(
+                              purchasedModel: controller
+                                  .purchasedMoviesModel!.content![index]),
                         ),
                         child: Container(
                           decoration: BoxDecoration(

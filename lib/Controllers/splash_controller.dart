@@ -37,10 +37,10 @@ class SplashController extends GetxController
         email = value;
         if (email == null) {
           if (loginController.firebaseAuth.currentUser != null) {
-            Get.off(() => BottomNavBar());
+            Get.offAll(() => BottomNavBar());
           } else {
             Timer(Duration(seconds: 2), () {
-              Get.off(() => LoginScreen());
+              Get.offAll(() => LoginScreen());
             });
           }
         } else {
@@ -49,7 +49,7 @@ class SplashController extends GetxController
           moviesDetailsController.getUserid();
           moviesDetailsController.getFavoriteToken();
           Timer(Duration(seconds: 2), () {
-            Get.off(() => BottomNavBar());
+            Get.offAll(() => BottomNavBar());
           });
         }
       });
