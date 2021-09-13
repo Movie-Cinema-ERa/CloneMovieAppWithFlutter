@@ -2,7 +2,7 @@
     package="com.example.flutter_project"
     xmlns:tools="http://schemas.android.com/tools">
    <application
-        android:label="flutter_project"
+        android:label="Cinema Era"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label"
         >
