@@ -9,6 +9,8 @@ class CustomTextForm extends StatelessWidget {
       this.preIcon,
       this.txtType,
       this.editTxtControl,
+      this.suffixIcon,
+      this.onTap,
       this.obscureText = false})
       : super(key: key);
   final String? label;
@@ -17,6 +19,8 @@ class CustomTextForm extends StatelessWidget {
   final TextInputType? txtType;
   final TextEditingController? editTxtControl;
   final bool? obscureText;
+  final IconData? suffixIcon;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +42,14 @@ class CustomTextForm extends StatelessWidget {
               preIcon,
               size: 17,
               color: Colors.blue,
+            ),
+            suffixIcon: GestureDetector(
+              onTap: onTap,
+              child: Icon(
+                suffixIcon,
+                size: 17,
+                color: Colors.blue,
+              ),
             ),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(9),

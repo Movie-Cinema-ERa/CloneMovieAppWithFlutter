@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_project/Controllers/SignUp_controller.dart';
+import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Screens/loginScreen.dart';
 import 'package:flutter_project/Widgets/account_CustomButton.dart';
 import 'package:flutter_project/Widgets/account_TextForm.dart';
@@ -95,23 +96,48 @@ class SignUpScreen extends StatelessWidget {
                           SizedBox(
                             height: 14,
                           ),
-                          CustomTextForm(
-                              editTxtControl: passwordTXT,
-                              label: "Password",
-                              hint: "Enter your password",
-                              preIcon: Icons.lock,
-                              txtType: TextInputType.text,
-                              obscureText: true),
+                          GetBuilder<LoginController>(
+                            builder: (controller) {
+                              return CustomTextForm(
+                                editTxtControl: passwordTXT,
+                                label: "Password",
+                                hint: "Enter your password",
+                                preIcon: Icons.lock,
+                                txtType: TextInputType.text,
+                                obscureText: controller.obscureSignUpPass,
+                                onTap: () {
+                                  controller.obscureSignUpPass =
+                                      !controller.obscureSignUpPass;
+                                  controller.update();
+                                },
+                                suffixIcon: controller.obscureSignUpPass
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              );
+                            },
+                          ),
                           SizedBox(
                             height: 14,
                           ),
-                          CustomTextForm(
-                              editTxtControl: confirmPasswordTXT,
-                              label: "Confirm password",
-                              hint: "Re-enter your password",
-                              preIcon: Icons.lock,
-                              txtType: TextInputType.text,
-                              obscureText: true),
+                          GetBuilder<LoginController>(
+                            builder: (controller) {
+                              return CustomTextForm(
+                                  editTxtControl: confirmPasswordTXT,
+                                  label: "Confirm password",
+                                  hint: "Re-enter your password",
+                                  preIcon: Icons.lock,
+                                  txtType: TextInputType.text,
+                                  onTap: () {
+                                    controller.obscureConfrimPass =
+                                        !controller.obscureConfrimPass;
+                                    controller.update();
+                                  },
+                                  suffixIcon: controller.obscureConfrimPass
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  obscureText: controller.obscureConfrimPass);
+                            },
+                          ),
                           SizedBox(
                             height: 10,
                           ),

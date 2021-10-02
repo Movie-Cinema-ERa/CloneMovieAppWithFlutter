@@ -20,6 +20,9 @@ class LoginController extends GetxController {
   final SecureStorage secureStorage = SecureStorage();
   var isLogin = false.obs;
   String? favouriteToken;
+  var obscurePass = true;
+  var obscureSignUpPass = true;
+  var obscureConfrimPass = true;
   final MoviesDetailsController moviesDetailsController =
       Get.find<MoviesDetailsController>();
 

@@ -81,13 +81,25 @@ class LoginScreen extends StatelessWidget {
                           SizedBox(
                             height: 14,
                           ),
-                          CustomTextForm(
-                              label: "Password",
-                              hint: "Enter your password",
-                              preIcon: Icons.lock,
-                              txtType: TextInputType.text,
-                              obscureText: true,
-                              editTxtControl: passwordTxt),
+                          GetBuilder<LoginController>(
+                            builder: (controller) {
+                              return CustomTextForm(
+                                  label: "Password",
+                                  hint: "Enter your password",
+                                  preIcon: Icons.lock,
+                                  txtType: TextInputType.text,
+                                  obscureText: controller.obscurePass,
+                                  editTxtControl: passwordTxt,
+                                  onTap: () {
+                                    controller.obscurePass =
+                                        !controller.obscurePass;
+                                    controller.update();
+                                  },
+                                  suffixIcon: controller.obscurePass
+                                      ? Icons.visibility
+                                      : Icons.visibility_off);
+                            },
+                          ),
                           SizedBox(
                             height: 6,
                           ),
