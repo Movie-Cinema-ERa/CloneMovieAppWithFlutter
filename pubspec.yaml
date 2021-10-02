@@ -34,7 +34,7 @@ dependencies:
   flutter_secure_storage: ^4.2.0
   fluttertoast: ^8.0.7
   font_awesome_flutter: ^9.1.0
-  get: ^4.2.4
+  get: ^4.3.8
   google_fonts: ^2.1.0
   google_sign_in: ^5.0.4
   http: ^0.13.3

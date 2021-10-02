@@ -8,6 +8,7 @@ import 'Screens/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Get.testMode = true;
   Get.lazyPut(() => MoviesDetailsController());
   await dotenv.load(fileName: "assets/.env");
   runApp(MyApp());
@@ -34,7 +35,9 @@ class MoviesApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       initialRoute: "/",
-      getPages: [GetPage(name: "/", page: () => SplashScreen())],
+      getPages: [
+        GetPage(name: "/", page: () => SplashScreen()),
+      ],
     );
   }
 }
