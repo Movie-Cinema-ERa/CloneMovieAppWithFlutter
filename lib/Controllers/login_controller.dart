@@ -15,6 +15,7 @@ import 'package:random_string/random_string.dart';
 
 class LoginController extends GetxController {
   var loginModel = LoginModel().obs;
+  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   late GoogleSignIn googleSignIn;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final SecureStorage secureStorage = SecureStorage();
@@ -23,6 +24,8 @@ class LoginController extends GetxController {
   var obscurePass = true.obs;
   var obscureSignUpPass = true;
   var obscureConfrimPass = true;
+  var email = '';
+  var password = '';
   final MoviesDetailsController moviesDetailsController =
       Get.find<MoviesDetailsController>();
 
@@ -37,8 +40,26 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
+  String? validateEmail(String value) {
+    if (!GetUtils.isEmail(value)) {
+      return "Invalid Email";
+    }
+    return "";
+  }
+
+  String? validPassword(String value) {
+    if (value.length <= 5) {
+      return "Password must be greater than 5";
+    }
+    return "";
+  }
+
   Future login({String? email, String? password}) async {
+    // final isValid = loginFormKey.currentState!.validate();
+
+    // if (isValid) {
     try {
+      loginFormKey.currentState!.save();
       await ServicesApi.loginModel(email: email, password: password)
           .then((response) {
         if (response!.status == 200) {
@@ -77,6 +98,7 @@ class LoginController extends GetxController {
     } catch (e) {
       print(e.toString());
     }
+    // }
   }
 
   void logout() async {

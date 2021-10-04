@@ -25,6 +25,8 @@ class LoginScreen extends StatelessWidget {
         body: SingleChildScrollView(
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Center(
+            // key: loginController.loginFormKey,
+            // autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Container(
               child: Column(
                 children: [
@@ -72,6 +74,14 @@ class LoginScreen extends StatelessWidget {
                             height: 18,
                           ),
                           CustomTextForm(
+                              onSaved: (value) {
+                                loginController.email = value!;
+                              },
+                              validator: (value) {
+                                return loginController
+                                    .validateEmail(value!)
+                                    .toString();
+                              },
                               label: "Email address",
                               hint: "Enter your email",
                               preIcon: Icons.email,
@@ -79,9 +89,17 @@ class LoginScreen extends StatelessWidget {
                               obscureText: false,
                               editTxtControl: emailTxt),
                           SizedBox(
-                            height: 14,
+                            height: 11,
                           ),
                           Obx(() => CustomTextForm(
+                              onSaved: (value) {
+                                loginController.password = value!;
+                              },
+                              validator: (value) {
+                                return loginController
+                                    .validPassword(value!)
+                                    .toString();
+                              },
                               label: "Password",
                               hint: "Enter your password",
                               preIcon: Icons.lock,

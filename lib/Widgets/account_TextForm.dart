@@ -11,6 +11,8 @@ class CustomTextForm extends StatelessWidget {
       this.editTxtControl,
       this.suffixIcon,
       this.onTap,
+      this.onSaved,
+      this.validator,
       this.obscureText = false})
       : super(key: key);
   final String? label;
@@ -20,6 +22,8 @@ class CustomTextForm extends StatelessWidget {
   final TextEditingController? editTxtControl;
   final bool? obscureText;
   final IconData? suffixIcon;
+  final Function(String?)? onSaved;
+  final String Function(String?)? validator;
   final Function()? onTap;
 
   @override
@@ -27,11 +31,13 @@ class CustomTextForm extends StatelessWidget {
     return Container(
       height: Get.height * 0.058,
       child: TextFormField(
+        onSaved: onSaved,
         controller: editTxtControl,
         style: TextStyle(color: Colors.blue[700], fontSize: 15),
         keyboardType: txtType,
         cursorColor: Colors.blue,
         obscureText: obscureText!,
+        validator: validator,
         decoration: InputDecoration(
             labelText: label,
             labelStyle: TextStyle(fontSize: 15, color: Colors.blue),
@@ -51,6 +57,17 @@ class CustomTextForm extends StatelessWidget {
                 color: Colors.blue,
               ),
             ),
+            errorStyle: TextStyle(fontSize: 10),
+            focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(9),
+                borderSide: BorderSide(
+                  color: Colors.blue.shade700,
+                  width: 0.6,
+                )),
+            errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(9),
+                borderSide:
+                    BorderSide(color: Colors.blue.shade700, width: 0.6)),
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(9),
                 borderSide:
