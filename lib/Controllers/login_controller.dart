@@ -59,7 +59,7 @@ class LoginController extends GetxController {
 
     // if (isValid) {
     try {
-      loginFormKey.currentState!.save();
+      // loginFormKey.currentState!.save();
       await ServicesApi.loginModel(email: email, password: password)
           .then((response) {
         if (response!.status == 200) {
