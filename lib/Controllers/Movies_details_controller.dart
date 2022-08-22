@@ -1,5 +1,4 @@
 import 'package:chewie/chewie.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Models/All_reviews_model.dart';
 import 'package:flutter_project/Models/AvgRate_model.dart';
@@ -24,23 +23,6 @@ class MoviesDetailsController extends GetxController {
   var isReviews = false;
   var userId;
   var favoriteToken;
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  getUserid() async {
-    userId = await SecureStorage().readKey(key: 'UserId');
-    update();
-    return userId;
-  }
-
-  getFavoriteToken() async {
-    favoriteToken = await SecureStorage().readKey(key: 'FavoriteToken');
-    update();
-    return favoriteToken;
-  }
-
   Future addFavourite(
       {String? favoriteToken, String? moviesId, String? userId}) async {
     try {
@@ -54,7 +36,7 @@ class MoviesDetailsController extends GetxController {
           Fluttertoast.showToast(msg: response.content.toString());
         } else {
           Get.showSnackbar(
-            GetBar(
+            GetSnackBar(
               icon: Icon(
                 FontAwesomeIcons.exclamationCircle,
                 color: Colors.grey[100],
@@ -90,7 +72,7 @@ class MoviesDetailsController extends GetxController {
           return response;
         } else {
           Get.showSnackbar(
-            GetBar(
+            GetSnackBar(
               icon: Icon(
                 FontAwesomeIcons.exclamationCircle,
                 color: Colors.grey[100],
@@ -163,6 +145,18 @@ class MoviesDetailsController extends GetxController {
     }
   }
 
+  getFavoriteToken() async {
+    favoriteToken = await SecureStorage().readKey(key: 'FavoriteToken');
+    update();
+    return favoriteToken;
+  }
+
+  getUserid() async {
+    userId = await SecureStorage().readKey(key: 'UserId');
+    update();
+    return userId;
+  }
+
   @override
   void onClose() {
     chewieController!.dispose();
@@ -170,5 +164,10 @@ class MoviesDetailsController extends GetxController {
     chewieController!.pause();
     chewieController!.videoPlayerController.pause();
     super.onClose();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
   }
 }

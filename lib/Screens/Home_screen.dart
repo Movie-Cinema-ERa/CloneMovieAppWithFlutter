@@ -14,13 +14,13 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
   final LoginController loginController = Get.put(LoginController());
   final SecureStorage secureStorage = SecureStorage();
   final HomeScreenController homeScreenController =
       Get.put(HomeScreenController());
   final MoviesDetailsController moviesDetailsController =
       Get.put(MoviesDetailsController());
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -130,22 +130,6 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       DrawerListTile(
-                        icon: Icons.home,
-                        titleTxt: "Home",
-                      ),
-                      DrawerListTile(
-                        icon: Icons.read_more_rounded,
-                        titleTxt: "About us",
-                      ),
-                      DrawerListTile(
-                        icon: Icons.call,
-                        titleTxt: "Contact us",
-                      ),
-                      DrawerListTile(
-                        icon: Icons.help_center,
-                        titleTxt: "Help",
-                      ),
-                      DrawerListTile(
                         icon: Icons.logout,
                         titleTxt: "Log out",
                         onTap: () => loginController.isLogin.value
@@ -234,7 +218,8 @@ class HomeScreen extends StatelessWidget {
                     ))
               ],
               elevation: 0.0,
-              brightness: Brightness.light,
+              systemOverlayStyle:
+                  SystemUiOverlayStyle(statusBarBrightness: Brightness.light),
               centerTitle: true,
               title: RichText(
                 text: TextSpan(
@@ -435,6 +420,7 @@ class HomeScreen extends StatelessWidget {
                           },
                         )
                       : SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
                           keyboardDismissBehavior:
                               ScrollViewKeyboardDismissBehavior.onDrag,
                           child: Container(

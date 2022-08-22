@@ -11,30 +11,6 @@ class VideosController extends GetxController {
   ChewieController? chewieController;
   var link;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  initializePlayer({link}) {
-    chewieController = ChewieController(
-      videoPlayerController: VideoPlayerController.network(link),
-      autoInitialize: true,
-      aspectRatio: 16 / 9,
-      autoPlay: true,
-      looping: true,
-      errorBuilder: (context, error) {
-        return Container(
-          child: Text("Sorry cant run videos"),
-        );
-      },
-    );
-  }
-
-  Chewie playTrailers() {
-    return Chewie(controller: chewieController!);
-  }
-
   Future<bool> exitPage() async {
     if (chewieController != null &&
         chewieController!.videoPlayerController.value.isPlaying) {
@@ -54,23 +30,49 @@ class VideosController extends GetxController {
     return Future.value(true);
   }
 
-  Future<bool> exitPageFullMovies() async {
-    if (chewieController != null &&
-        chewieController!.videoPlayerController.value.isPlaying) {
-      onClose();
-    } else {
-      chewieController!.dispose();
-      chewieController!.videoPlayerController.dispose();
-      onClose();
-    }
+  Future exitPageFullMovies() async {
+    chewieController?.pause();
+    chewieController?.videoPlayerController.pause();
+    chewieController?.dispose();
+    chewieController?.videoPlayerController.dispose();
     update();
-    return Future.value(true);
+  }
+
+  initializePlayer({link}) {
+    chewieController = ChewieController(
+      videoPlayerController: VideoPlayerController.network(link),
+      autoInitialize: true,
+      aspectRatio: 16 / 9,
+      autoPlay: true,
+      looping: true,
+      errorBuilder: (context, error) {
+        return Container(
+          child: Text("Sorry cant run videos"),
+        );
+      },
+    );
   }
 
   @override
   void onClose() {
-    chewieController!.pause();
-    chewieController!.videoPlayerController.pause();
+    chewieController?.pause();
+    chewieController?.videoPlayerController.pause();
     super.onClose();
+  }
+
+  Chewie playTrailers(link) {
+    return Chewie(
+        controller: ChewieController(
+      videoPlayerController: VideoPlayerController.network(link),
+      autoInitialize: true,
+      aspectRatio: 16 / 9,
+      autoPlay: true,
+      looping: true,
+      errorBuilder: (context, error) {
+        return Container(
+          child: Text("Sorry cant run videos"),
+        );
+      },
+    ));
   }
 }

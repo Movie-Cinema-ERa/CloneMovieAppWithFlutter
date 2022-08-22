@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_khalti/flutter_khalti.dart';
 import 'package:flutter_project/Controllers/videos_controller.dart';
 import 'package:flutter_project/Screens/Full_movies_screen.dart';
 import 'package:flutter_project/Services/ServicesApi.dart';
@@ -8,12 +7,44 @@ import 'package:flutter_project/helpers/ApiClient.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 
 class KhaltiPaymentControllers extends GetxController {
   var testPublicKey = dotenv.env['Test_Public_Key'];
   var khaltiToken;
   var amount;
   final VideosController videosController = Get.find<VideosController>();
+
+  addKhaltiTransactionDetails(
+      {String? userId,
+      String? moviesId,
+      String? favoriteToken,
+      String? khaltiTransaction}) async {
+    try {
+      ServicesApi.addKhaltiTransaction(
+              userId: userId,
+              moviesId: moviesId,
+              favoriteToken: favoriteToken,
+              khaltiTransaction: khaltiTransaction)
+          .then((response) {
+        if (response != null) {
+          Fluttertoast.showToast(msg: "Thanks for payment, enjoy the movie!!");
+        } else {
+          Get.showSnackbar(
+            GetBar(
+              icon: Icon(
+                FontAwesomeIcons.exclamationCircle,
+                color: Colors.grey[100],
+                size: 18,
+              ),
+              duration: Duration(seconds: 2),
+              message: "Unable to do payment process!",
+            ),
+          );
+        }
+      });
+    } catch (e) {}
+  }
 
 //Check whether the movies is paid or not
   khaltiCheck(
@@ -160,28 +191,24 @@ class KhaltiPaymentControllers extends GetxController {
     }
   }
 
-//UI and Fxn for khalti payment process
+  //UI and Fxn for khalti payment process
   khaltiPay(
       {int? moviesid,
       double? price,
       String? moviesName,
       String? userId,
       String? favToken}) async {
-    FlutterKhalti _flutterKhalti = FlutterKhalti.configure(
-        publicKey: testPublicKey.toString(),
-        urlSchemeIOS: "KhaltiPayFlutterExampleScheme",
-        paymentPreferences: [KhaltiPaymentPreference.KHALTI]);
-
-    KhaltiProduct product = KhaltiProduct(
-      id: moviesid.toString(),
-      amount: price!,
-      name: moviesName!,
+    PaymentConfig _flutterKhaltiConfig = PaymentConfig(
+      amount: int.parse(price.toString()),
+      productIdentity: moviesid.toString(),
+      productName: moviesName ?? "",
+      mobileReadOnly: true,
     );
 
-    _flutterKhalti.startPayment(
-      product: product,
+    KhaltiButton.wallet(
+      config: _flutterKhaltiConfig,
       onSuccess: (data) {
-        khaltiToken = data['token'];
+        khaltiToken = data.token;
         amount = price;
 
         try {
@@ -201,7 +228,7 @@ class KhaltiPaymentControllers extends GetxController {
         }
         update();
       },
-      onFaliure: (error) {
+      onFailure: (error) {
         Get.showSnackbar(
           GetBar(
             icon: Icon(
@@ -215,36 +242,5 @@ class KhaltiPaymentControllers extends GetxController {
         );
       },
     );
-  }
-
-  addKhaltiTransactionDetails(
-      {String? userId,
-      String? moviesId,
-      String? favoriteToken,
-      String? khaltiTransaction}) async {
-    try {
-      ServicesApi.addKhaltiTransaction(
-              userId: userId,
-              moviesId: moviesId,
-              favoriteToken: favoriteToken,
-              khaltiTransaction: khaltiTransaction)
-          .then((response) {
-        if (response != null) {
-          Fluttertoast.showToast(msg: "Thanks for payment, enjoy the movie!!");
-        } else {
-          Get.showSnackbar(
-            GetBar(
-              icon: Icon(
-                FontAwesomeIcons.exclamationCircle,
-                color: Colors.grey[100],
-                size: 18,
-              ),
-              duration: Duration(seconds: 2),
-              message: "Unable to do payment process!",
-            ),
-          );
-        }
-      });
-    } catch (e) {}
   }
 }

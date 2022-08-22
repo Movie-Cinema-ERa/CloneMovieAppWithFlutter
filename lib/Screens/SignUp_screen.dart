@@ -10,13 +10,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class SignUpScreen extends StatelessWidget {
-  SignUpScreen({Key? key}) : super(key: key);
   final SignUpController signUpController = Get.put(SignUpController());
   final TextEditingController fullNameTXT = TextEditingController();
   final TextEditingController emailTXT = TextEditingController();
   final TextEditingController passwordTXT = TextEditingController();
   final TextEditingController confirmPasswordTXT = TextEditingController();
   final tapGestureRecognizer = TapGestureRecognizer()..onTap = () {};
+  SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +28,7 @@ class SignUpScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Center(
             child: Container(
@@ -63,7 +64,7 @@ class SignUpScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.06,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 38, right: 38),
+                    padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Container(
                       child: Column(
                         children: [
@@ -183,7 +184,7 @@ class SignUpScreen extends StatelessWidget {
                                       password: passwordTXT.text,
                                     );
                                   } else {
-                                    Get.showSnackbar(GetBar(
+                                    Get.showSnackbar(GetSnackBar(
                                       icon: Icon(
                                         FontAwesomeIcons.exclamationCircle,
                                         color: Colors.grey[100],
@@ -195,7 +196,7 @@ class SignUpScreen extends StatelessWidget {
                                     ));
                                   }
                                 } else {
-                                  Get.showSnackbar(GetBar(
+                                  Get.showSnackbar(GetSnackBar(
                                     icon: Icon(
                                       FontAwesomeIcons.exclamationCircle,
                                       color: Colors.grey[100],

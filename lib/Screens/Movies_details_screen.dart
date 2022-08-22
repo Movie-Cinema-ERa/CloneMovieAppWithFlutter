@@ -10,14 +10,11 @@ import 'package:flutter_project/Models/movies_model.dart';
 import 'package:flutter_project/Models/purchased_movies_model.dart';
 import 'package:flutter_project/Widgets/movies_details_richText.dart';
 import 'package:flutter_project/helpers/ApiClient.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class MoviesDetailsScreen extends StatelessWidget {
-  MoviesDetailsScreen(
-      {Key? key, this.moviesModel, this.favouriteModel, this.purchasedModel})
-      : super(key: key);
   final ActionMovie? moviesModel;
   final Content? favouriteModel;
   final Contents? purchasedModel;
@@ -29,6 +26,9 @@ class MoviesDetailsScreen extends StatelessWidget {
   final VideosController videosController = Get.put(VideosController());
   final KhaltiPaymentControllers khaltiPaymentControllers =
       Get.put(KhaltiPaymentControllers());
+  MoviesDetailsScreen(
+      {Key? key, this.moviesModel, this.favouriteModel, this.purchasedModel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +88,8 @@ class MoviesDetailsScreen extends StatelessWidget {
                                             .value
                                             .isPlaying
                                     ? Container(
-                                        child: videosController.playTrailers(),
+                                        child: videosController.playTrailers(
+                                            Get.arguments['fullMovies']),
                                       )
                                     : Center(
                                         child: Container(

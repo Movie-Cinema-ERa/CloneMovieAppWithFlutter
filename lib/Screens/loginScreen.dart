@@ -8,10 +8,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
   final LoginController loginController = Get.put(LoginController());
   final TextEditingController emailTxt = TextEditingController();
   final TextEditingController passwordTxt = TextEditingController();
+  LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +23,7 @@ class LoginScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: Center(
             // key: loginController.loginFormKey,
@@ -60,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.05,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 38, right: 38),
+                    padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Container(
                       child: Column(
                         children: [
@@ -114,22 +115,7 @@ class LoginScreen extends StatelessWidget {
                                   ? Icons.visibility
                                   : Icons.visibility_off)),
                           SizedBox(
-                            height: 6,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "Forgot password?",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 13,
+                            height: 26,
                           ),
                           CustomButton(
                               label: "Log in",
@@ -200,7 +186,7 @@ class LoginScreen extends StatelessWidget {
                             height: 10,
                           ),
                           Container(
-                            width: Get.width * 0.7,
+                            width: double.infinity,
                             child: ElevatedButton.icon(
                               onPressed: () {
                                 loginController.googleLogin();
