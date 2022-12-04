@@ -14,7 +14,7 @@
 *.ipr
 *.iws
 .idea/
-*.env
+# *.env
 android/cinemaTest.jks
 key.properties
 
