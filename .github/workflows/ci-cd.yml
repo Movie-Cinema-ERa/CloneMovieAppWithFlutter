@@ -3,11 +3,11 @@ name: Flutter CI + CD
 
 # This workflow is triggered on pushes to the repository.
 on:
-  # push: 
-  #   branches: [ main ] # This will trigger the workflow on every push to the main branch
+   push: 
+    branches: [ master ] # This will trigger the workflow on every push to the main branch
   # pull_request:
   #   branches: [ main ] # Add this trigger to run this workflow on PR's to the main branch
-  workflow_dispatch: # to manually run this workflow
+ # workflow_dispatch: # to manually run this workflow
 
 env:
   FLUTTER_CHANNEL: 'stable' # 'stable', 'beta', or 'master', default to: 'stable'
