@@ -3,7 +3,6 @@ import 'package:flutter_project/Controllers/Movies_details_controller.dart';
 import 'package:flutter_project/Controllers/login_controller.dart';
 import 'package:flutter_project/Models/favorite_movie_list_model.dart';
 import 'package:flutter_project/Services/ServicesApi.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 

@@ -40,6 +40,7 @@ class ServicesApi {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
 //Api of signup account
@@ -68,6 +69,7 @@ class ServicesApi {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
   //Api of movies
@@ -83,6 +85,7 @@ class ServicesApi {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
   //Api of add to favorite
@@ -111,6 +114,7 @@ class ServicesApi {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
   //Api for list of favorite movies
@@ -138,6 +142,7 @@ class ServicesApi {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
 //Api remove favorite
@@ -225,6 +230,7 @@ class ServicesApi {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
   //Average ratings
@@ -250,6 +256,7 @@ class ServicesApi {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
   //Api delete Review
@@ -278,6 +285,7 @@ class ServicesApi {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
   //Api check Movies khalti Payment
@@ -306,6 +314,7 @@ class ServicesApi {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 
   //Api check Movies khalti Payment
@@ -395,5 +404,6 @@ class ServicesApi {
     } catch (e) {
       print(e.toString());
     }
+    return null;
   }
 }

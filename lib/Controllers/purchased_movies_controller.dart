@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_project/Models/purchased_movies_model.dart';
 import 'package:flutter_project/Services/ServicesApi.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 class PurchasedMoviesControllers extends GetxController {
