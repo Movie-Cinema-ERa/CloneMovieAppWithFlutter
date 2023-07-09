@@ -12,7 +12,7 @@ void main() async {
   await Firebase.initializeApp();
   Get.testMode = true;
   Get.lazyPut(() => MoviesDetailsController());
-  await dotenv.load(fileName: "assets/.env");
+  await dotenv.load(fileName: ".env");
   runApp(MyApp());
 }
 
@@ -28,10 +28,6 @@ class MoviesApp extends StatelessWidget {
           primaryColorDark: Colors.white,
           primaryColor: Colors.white,
         ),
-        supportedLocales: const [
-          Locale('en', 'US'),
-          Locale('ne', 'NP'),
-        ],
         localizationsDelegates: [KhaltiLocalizations.delegate],
         debugShowCheckedModeBanner: false,
         home: SplashScreen(),

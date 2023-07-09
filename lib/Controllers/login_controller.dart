@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/BottomNavBar/ButtomNavBar.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';
@@ -10,7 +11,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:random_string/random_string.dart';
 
 class LoginController extends GetxController {
@@ -29,29 +29,52 @@ class LoginController extends GetxController {
   final MoviesDetailsController moviesDetailsController =
       Get.find<MoviesDetailsController>();
 
-  @override
-  void onInit() {
-    googleSignIn = GoogleSignIn();
-    ever(isLogin, googleHanldeLogin);
-    isLogin.value = firebaseAuth.currentUser != null;
-    firebaseAuth.authStateChanges().listen((event) {
-      isLogin(event != null);
-    });
-    super.onInit();
+  Future googleHanldeLogin(isLogin) async {
+    if (isLogin) {
+      Get.offAll(() => BottomNavBar());
+    } else {
+      Get.offAll(() => LoginScreen());
+    }
   }
 
-  String? validateEmail(String value) {
-    if (!GetUtils.isEmail(value)) {
-      return "Invalid Email";
+  Future googleLogin() async {
+    Get.defaultDialog(
+      radius: 10,
+      title: "Please wait a moment...",
+      titleStyle: TextStyle(fontSize: 16),
+      content: Center(
+        child: Container(
+          height: 26,
+          width: 26,
+          child: CircularProgressIndicator(
+            strokeWidth: 2.4,
+            backgroundColor: Colors.grey[300],
+          ),
+        ),
+      ),
+    );
+    GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+    if (googleSignIn.currentUser == null) {
+      Get.back();
+    } else {
+      try {
+        GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount!.authentication;
+        OAuthCredential oAuthCredential = GoogleAuthProvider.credential(
+            accessToken: googleSignInAuthentication.accessToken,
+            idToken: googleSignInAuthentication.idToken);
+        await firebaseAuth.signInWithCredential(oAuthCredential);
+        Fluttertoast.showToast(msg: "Successfully you are logged in");
+        Get.back();
+      } catch (e) {
+        print(e.toString());
+      }
     }
-    return "";
   }
 
-  String? validPassword(String value) {
-    if (value.length <= 5) {
-      return "Password must be greater than 5";
-    }
-    return "";
+  Future googleLogout() async {
+    await googleSignIn.disconnect();
+    await firebaseAuth.signOut();
   }
 
   Future login({String? email, String? password}) async {
@@ -109,51 +132,28 @@ class LoginController extends GetxController {
     Get.offAll(LoginScreen());
   }
 
-  Future googleHanldeLogin(isLogin) async {
-    if (isLogin) {
-      Get.offAll(() => BottomNavBar());
-    } else {
-      Get.offAll(() => LoginScreen());
-    }
+  @override
+  void onInit() {
+    googleSignIn = GoogleSignIn();
+    ever(isLogin, googleHanldeLogin);
+    isLogin.value = firebaseAuth.currentUser != null;
+    firebaseAuth.authStateChanges().listen((event) {
+      isLogin(event != null);
+    });
+    super.onInit();
   }
 
-  Future googleLogin() async {
-    Get.defaultDialog(
-      radius: 10,
-      title: "Please wait a moment...",
-      titleStyle: TextStyle(fontSize: 16),
-      content: Center(
-        child: Container(
-          height: 26,
-          width: 26,
-          child: CircularProgressIndicator(
-            strokeWidth: 2.4,
-            backgroundColor: Colors.grey[300],
-          ),
-        ),
-      ),
-    );
-    GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-    if (googleSignIn == null) {
-      Get.back();
-    } else {
-      try {
-        GoogleSignInAuthentication googleSignInAuthentication =
-            await googleSignInAccount!.authentication;
-        OAuthCredential oAuthCredential = GoogleAuthProvider.credential(
-            accessToken: googleSignInAuthentication.accessToken,
-            idToken: googleSignInAuthentication.idToken);
-        await firebaseAuth.signInWithCredential(oAuthCredential);
-        Fluttertoast.showToast(msg: "Successfully you are logged in");
-        Get.back();
-      } catch (e) {
-        print(e.toString());
-      }
+  String? validateEmail(String value) {
+    if (!GetUtils.isEmail(value)) {
+      return "Invalid Email";
     }
+    return "";
   }
 
-  Future googleLogout() async {
-    await googleSignIn.disconnect();
-    await firebaseAuth.signOut();
+  String? validPassword(String value) {
+    if (value.length <= 5) {
+      return "Password must be greater than 5";
+    }
+    return "";
   }
 }

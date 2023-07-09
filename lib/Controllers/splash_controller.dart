@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project/BottomNavBar/ButtomNavBar.dart';
 import 'package:flutter_project/Controllers/Movies_details_controller.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_project/helpers/SecureStorage.dart';
 import 'package:get/get.dart';
 
 class SplashController extends GetxController
-    with SingleGetTickerProviderMixin {
+    with GetSingleTickerProviderStateMixin {
   AnimationController? animationController;
   Animation<double>? animation;
   String? email = "";
@@ -19,6 +20,12 @@ class SplashController extends GetxController
       Get.put(HomeScreenController());
   final MoviesDetailsController moviesDetailsController =
       Get.find<MoviesDetailsController>();
+
+  @override
+  void onClose() {
+    animationController!.dispose();
+    super.onClose();
+  }
 
   @override
   void onInit() {
@@ -56,11 +63,5 @@ class SplashController extends GetxController
     });
 
     super.onInit();
-  }
-
-  @override
-  void onClose() {
-    animationController!.dispose();
-    super.onClose();
   }
 }
